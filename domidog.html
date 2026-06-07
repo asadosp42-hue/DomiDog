@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOMI DOG 🌭</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rojo: #E8192C;
+      --amarillo: #FFD700;
+      --naranja: #FF6B00;
+      --oscuro: #1A0A00;
+      --crema: #FFF8EE;
+      --cafe: #5C2D0A;
+      --blanco: #FFFFFF;
+      --sombra: 0 8px 32px rgba(232,25,44,0.18);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--oscuro);
+      color: var(--crema);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--rojo);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      border-bottom: 4px solid var(--amarillo);
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+    }
+
+    .logo-icon {
+      font-size: 2.8rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .logo-text {
+      font-family: 'Bangers', cursive;
+      font-size: 2.4rem;
+      letter-spacing: 3px;
+      color: var(--amarillo);
+      text-shadow: 3px 3px 0 var(--oscuro);
+      line-height: 1;
+    }
+
+    .logo-sub {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--crema);
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-admin {
+      background: var(--oscuro);
+      color: var(--amarillo);
+      border: 2px solid var(--amarillo);
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 0.85rem;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+    .btn-admin:hover {
+      background: var(--amarillo);
+      color: var(--oscuro);
+    }
+
+    .cart-btn {
+      background: var(--amarillo);
+      color: var(--oscuro);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+    }
+    .cart-btn:hover { transform: scale(1.05); }
+
+    .cart-count {
+      background: var(--rojo);
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(135deg, var(--cafe) 0%, var(--oscuro) 50%, #2d0a00 100%);
+      padding: 60px 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '🌭🍔🌭🍔🌭🍔🌭🍔';
+      position: absolute;
+      font-size: 2rem;
+      top: 10px;
+      left: 0;
+      right: 0;
+      opacity: 0.08;
+      letter-spacing: 20px;
+      white-space: nowrap;
+    }
+
+    .hero-title {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: var(--amarillo);
+      text-shadow: 5px 5px 0 var(--rojo), 8px 8px 0 var(--oscuro);
+      letter-spacing: 4px;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      color: var(--crema);
+      opacity: 0.85;
+      font-weight: 700;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+
+    .delivery-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, var(--naranja), var(--rojo));
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      box-shadow: 0 6px 20px rgba(255,107,0,0.4);
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 20px rgba(255,107,0,0.4); }
+      50% { box-shadow: 0 6px 30px rgba(255,107,0,0.7); }
+    }
+
+    /* ─── MENÚ ─── */
+    .menu-section {
+      padding: 50px 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Bangers', cursive;
+      font-size: 2.5rem;
+      color: var(--amarillo);
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--rojo);
+      margin: 8px auto 0;
+      border-radius: 2px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #2d1000, #1a0800);
+      border: 2px solid #3d1800;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--amarillo);
+    }
+
+    .card-emoji {
+      font-size: 5rem;
+      text-align: center;
+      padding: 28px 0 10px;
+      display: block;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+    }
+
+    .card-body {
+      padding: 0 20px 20px;
+    }
+
+    .card-name {
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      color: var(--crema);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: #c8a07a;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .price {
+      font-family: 'Bangers', cursive;
+      font-size: 1.8rem;
+      color: var(--amarillo);
+      letter-spacing: 1px;
+    }
+
+    .price span {
+      font-size: 1rem;
+      color: #c8a07a;
+    }
+
+    .add-btn {
+      background: var(--rojo);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .add-btn:hover {
+      background: var(--naranja);
+      transform: scale(1.08);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--amarillo);
+      color: var(--oscuro);
+      font-size: 0.7rem;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ─── CARRITO MODAL ─── */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .overlay.active { display: flex; }
+
+    .modal {
+      background: var(--oscuro);
+      border: 3px solid var(--rojo);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+
+    .modal-title {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      color: var(--amarillo);
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--rojo);
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      transition: background 0.2s;
+    }
+    .close-btn:hover { background: var(--naranja); }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #3d1800;
+      gap: 10px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: 700;
+      color: var(--crema);
+      font-size: 0.95rem;
+    }
+
+    .cart-item-price {
+      color: var(--amarillo);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      background: #3d1800;
+      color: var(--crema);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      transition: background 0.2s;
+    }
+    .qty-btn:hover { background: var(--rojo); }
+
+    .qty-num {
+      font-weight: 900;
+      color: var(--amarillo);
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 30px 0;
+      color: #c8a07a;
+      font-size: 1.1rem;
+    }
+
+    .delivery-notice {
+      background: linear-gradient(90deg, rgba(255,107,0,0.2), rgba(232,25,44,0.2));
+      border: 1px solid var(--naranja);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      color: #ffcf9e;
+      font-weight: 700;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .cart-total {
+      font-family: 'Bangers', cursive;
+      font-size: 1.8rem;
+      color: var(--amarillo);
+      text-align: right;
+      margin: 16px 0;
+      letter-spacing: 1px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 700;
+      color: var(--crema);
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: #2d1000;
+      border: 2px solid #3d1800;
+      border-radius: 12px;
+      color: var(--crema);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--amarillo);
+    }
+
+    .form-input::placeholder { color: #7a4a2a; }
+
+    .order-btn {
+      width: 100%;
+      background: linear-gradient(90deg, var(--rojo), var(--naranja));
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 50px;
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 6px 20px rgba(232,25,44,0.4);
+      margin-top: 8px;
+    }
+
+    .order-btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 28px rgba(232,25,44,0.6);
+    }
+
+    /* ─── PANEL DUEÑO ─── */
+    .admin-panel {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #0d0500;
+      z-index: 300;
+      overflow-y: auto;
+    }
+
+    .admin-panel.active { display: block; }
+
+    .admin-header {
+      background: var(--cafe);
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid var(--amarillo);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .admin-title {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      color: var(--amarillo);
+      letter-spacing: 2px;
+    }
+
+    .admin-close {
+      background: var(--rojo);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .admin-content {
+      padding: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .stat-card {
+      background: #2d1000;
+      border: 2px solid #3d1800;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Bangers', cursive;
+      font-size: 2.2rem;
+      color: var(--amarillo);
+      letter-spacing: 1px;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: #c8a07a;
+      font-weight: 700;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .orders-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .order-card {
+      background: #2d1000;
+      border: 2px solid #3d1800;
+      border-radius: 16px;
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+
+    .order-card.pending { border-left: 5px solid var(--amarillo); }
+    .order-card.preparing { border-left: 5px solid var(--naranja); }
+    .order-card.delivered { border-left: 5px solid #28a745; opacity: 0.7; }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .order-num {
+      font-family: 'Bangers', cursive;
+      font-size: 1.3rem;
+      color: var(--amarillo);
+      letter-spacing: 1px;
+    }
+
+    .order-time {
+      font-size: 0.78rem;
+      color: #c8a07a;
+    }
+
+    .order-status-badge {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .status-pending { background: rgba(255,215,0,0.15); color: var(--amarillo); border: 1px solid var(--amarillo); }
+    .status-preparing { background: rgba(255,107,0,0.15); color: var(--naranja); border: 1px solid var(--naranja); }
+    .status-delivered { background: rgba(40,167,69,0.15); color: #28a745; border: 1px solid #28a745; }
+
+    .order-client {
+      font-weight: 700;
+      color: var(--crema);
+      margin-bottom: 4px;
+    }
+
+    .order-address {
+      font-size: 0.85rem;
+      color: #c8a07a;
+      margin-bottom: 10px;
+    }
+
+    .order-items-list {
+      background: #1a0800;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 0.88rem;
+      color: #e8c99a;
+      line-height: 1.8;
+    }
+
+    .order-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .order-total-val {
+      font-family: 'Bangers', cursive;
+      font-size: 1.4rem;
+      color: var(--amarillo);
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      padding: 7px 16px;
+      border-radius: 20px;
+      border: none;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-prepare {
+      background: var(--naranja);
+      color: white;
+    }
+
+    .btn-deliver {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-delete {
+      background: #5a1010;
+      color: #ff8080;
+      border: 1px solid #ff8080;
+    }
+
+    .no-orders {
+      text-align: center;
+      padding: 60px 0;
+      color: #7a4a2a;
+      font-size: 1.1rem;
+    }
+
+    /* ─── SUCCESS SCREEN ─── */
+    .success-screen {
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    .success-emoji {
+      font-size: 5rem;
+      margin-bottom: 16px;
+      display: block;
+      animation: pop 0.4s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .success-title {
+      font-family: 'Bangers', cursive;
+      font-size: 2.2rem;
+      color: var(--amarillo);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .success-msg {
+      color: #c8a07a;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--cafe);
+      text-align: center;
+      padding: 24px;
+      border-top: 3px solid var(--rojo);
+      color: #c8a07a;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    footer span { color: var(--amarillo); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1a0800; }
+    ::-webkit-scrollbar-thumb { background: var(--rojo); border-radius: 3px; }
+
+    @media (max-width: 600px) {
+      header { padding: 0 14px; }
+      .logo-text { font-size: 1.8rem; }
+      .logo-icon { font-size: 2rem; }
+      .cart-btn span:last-child { display: none; }
+      .menu-section { padding: 30px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<header>
+  <div class="logo-area">
+    <span class="logo-icon">🌭</span>
+    <div>
+      <div class="logo-text">DOMI DOG</div>
+      <div class="logo-sub">Perros & Hamburguesas</div>
+    </div>
+  </div>
+  <div class="header-nav">
+    <button class="btn-admin" onclick="openAdmin()">🔑 Dueño</button>
+    <button class="cart-btn" onclick="openCart()">
+      🛒 <span>Mi Pedido</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <h1 class="hero-title">¡DOMI DOG!</h1>
+  <p class="hero-sub">Los mejores perros calientes y hamburguesas 🔥</p>
+  <div class="delivery-badge">🛵 Domicilio disponible · $4.000 – $5.000</div>
+</section>
+
+<!-- ══════════ MENÚ ══════════ -->
+<section class="menu-section">
+  <h2 class="section-title">🌭 Nuestro Menú</h2>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <p>© 2025 <span>DOMI DOG</span> · Pedidos a domicilio · Hecho con ❤️ y mucha mostaza</p>
+</footer>
+
+<!-- ══════════ MODAL CARRITO ══════════ -->
+<div class="overlay" id="cartOverlay">
+  <div class="modal">
+    <button class="close-btn" onclick="closeCart()">✕</button>
+    <div id="cartContent"></div>
+  </div>
+</div>
+
+<!-- ══════════ PANEL DUEÑO ══════════ -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header">
+    <div class="admin-title">🔑 Panel del Dueño</div>
+    <button class="admin-close" onclick="closeAdmin()">✕ Cerrar</button>
+  </div>
+  <div class="admin-content">
+    <div class="admin-stats" id="adminStats"></div>
+    <h2 class="section-title" style="text-align:left;">📋 Pedidos Recibidos</h2>
+    <div class="orders-list" id="ordersList"></div>
+  </div>
+</div>
+
+<script>
+// ── DATOS DEL MENÚ ──
+const menu = [
+  {
+    id: 1,
+    name: "Perro Sencillo",
+    desc: "Salchicha jumbo, pan suave, salsas a tu gusto",
+    price: 4000,
+    emoji: "🌭",
+    popular: false
+  },
+  {
+    id: 2,
+    name: "Perro + Tocineta",
+    desc: "Salchicha jumbo con tocineta crujiente, pan tostado y salsas",
+    price: 6000,
+    emoji: "🌭",
+    popular: true
+  },
+  {
+    id: 3,
+    name: "Perro Apanado",
+    desc: "Salchicha apanada crocante, pan suave, salsas especiales",
+    price: 4500,
+    emoji: "🌭",
+    popular: false
+  },
+  {
+    id: 4,
+    name: "Hamburguesa Sencilla",
+    desc: "Carne jugosa, lechuga, tomate, queso y salsas de la casa",
+    price: 6000,
+    emoji: "🍔",
+    popular: false
+  },
+  {
+    id: 5,
+    name: "Hamburguesa Doble",
+    desc: "Doble carne, doble queso, tocineta, lechuga, tomate y salsas",
+    price: 12000,
+    emoji: "🍔",
+    popular: true
+  }
+];
+
+// ── ESTADO ──
+let cart = [];
+let orders = JSON.parse(localStorage.getItem('domidog_orders') || '[]');
+let orderCounter = parseInt(localStorage.getItem('domidog_counter') || '1');
+
+// ── RENDERIZAR MENÚ ──
+function renderMenu() {
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = menu.map(item => `
+    <div class="card">
+      ${item.popular ? '<span class="popular-badge">⭐ Popular</span>' : ''}
+      <span class="card-emoji">${item.emoji}</span>
+      <div class="card-body">
+        <div class="card-name">${item.name}</div>
+        <div class="card-desc">${item.desc}</div>
+        <div class="card-footer">
+          <div class="price">$${item.price.toLocaleString('es-CO')} <span>COP</span></div>
+          <button class="add-btn" onclick="addToCart(${item.id})">
+            + Agregar
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── CARRITO ──
+function addToCart(id) {
+  const item = menu.find(m => m.id === id);
+  const existing = cart.find(c => c.id === id);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...item, qty: 1 });
+  }
+  updateCartCount();
+  // Pequeña vibración visual
+  const btn = event.target;
+  btn.style.transform = 'scale(0.88)';
+  setTimeout(() => btn.style.transform = '', 150);
+}
+
+function updateCartCount() {
+  const total = cart.reduce((s, c) => s + c.qty, 0);
+  document.getElementById('cartCount').textContent = total;
+}
+
+function subtotal() {
+  return cart.reduce((s, c) => s + c.price * c.qty, 0);
+}
+
+function openCart() {
+  renderCart();
+  document.getElementById('cartOverlay').classList.add('active');
+}
+
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('active');
+}
+
+function renderCart(success = false) {
+  const content = document.getElementById('cartContent');
+
+  if (success) {
+    content.innerHTML = `
+      <div class="success-screen">
+        <span class="success-emoji">🎉</span>
+        <div class="success-title">¡PEDIDO ENVIADO!</div>
+        <p class="success-msg">
+          Tu pedido fue recibido con éxito.<br>
+          Pronto estamos preparando todo para ti 🌭🍔<br><br>
+          <strong style="color:var(--amarillo);">Recuerda: el domicilio tiene un costo adicional de $4.000 a $5.000 según tu ubicación.</strong>
+        </p>
+        <button class="order-btn" onclick="closeCart()" style="font-size:1.2rem;">
+          ¡Listo! 🙌
+        </button>
+      </div>`;
+    return;
+  }
+
+  if (cart.length === 0) {
+    content.innerHTML = `
+      <div class="modal-title">🛒 Mi Pedido</div>
+      <div class="cart-empty">
+        <div style="font-size:3rem;margin-bottom:12px;">🌭</div>
+        Tu carrito está vacío.<br>¡Agrega algo delicioso!
+      </div>`;
+    return;
+  }
+
+  const total = subtotal();
+
+  content.innerHTML = `
+    <div class="modal-title">🛒 Mi Pedido</div>
+    <div id="cartItems">
+      ${cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.emoji} ${item.name}</div>
+            <div class="cart-item-price">$${(item.price * item.qty).toLocaleString('es-CO')} COP</div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="delivery-notice">
+      🛵 <span>El domicilio tiene un costo adicional de <strong>$4.000 a $5.000</strong> según tu zona de entrega.</span>
+    </div>
+
+    <div class="cart-total">Subtotal: $${total.toLocaleString('es-CO')} COP</div>
+
+    <div>
+      <div class="form-group">
+        <label class="form-label">👤 Tu nombre *</label>
+        <input class="form-input" id="clientName" placeholder="Ej: María García" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">📞 Teléfono *</label>
+        <input class="form-input" id="clientPhone" placeholder="Ej: 310 000 0000" type="tel" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">📍 Dirección de entrega *</label>
+        <input class="form-input" id="clientAddress" placeholder="Ej: Cra 5 #12-34, Barrio Centro" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">💬 Notas del pedido (opcional)</label>
+        <input class="form-input" id="clientNotes" placeholder="Ej: sin cebolla, extra salsa..." />
+      </div>
+      <button class="order-btn" onclick="submitOrder()">
+        🌭 ENVIAR PEDIDO
+      </button>
+    </div>`;
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(c => c.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+  updateCartCount();
+  renderCart();
+}
+
+function submitOrder() {
+  const name = document.getElementById('clientName').value.trim();
+  const phone = document.getElementById('clientPhone').value.trim();
+  const address = document.getElementById('clientAddress').value.trim();
+  const notes = document.getElementById('clientNotes').value.trim();
+
+  if (!name || !phone || !address) {
+    alert('⚠️ Por favor completa nombre, teléfono y dirección.');
+    return;
+  }
+
+  const order = {
+    id: orderCounter++,
+    time: new Date().toLocaleString('es-CO'),
+    client: name,
+    phone,
+    address,
+    notes,
+    items: cart.map(c => ({ name: c.name, qty: c.qty, price: c.price })),
+    total: subtotal(),
+    status: 'pending'
+  };
+
+  orders.unshift(order);
+  localStorage.setItem('domidog_orders', JSON.stringify(orders));
+  localStorage.setItem('domidog_counter', String(orderCounter));
+
+  cart = [];
+  updateCartCount();
+  renderCart(true);
+}
+
+// ── ADMIN ──
+function openAdmin() {
+  const pass = prompt('🔑 Contraseña del dueño:');
+  if (pass !== 'domidog123') {
+    alert('❌ Contraseña incorrecta');
+    return;
+  }
+  renderAdmin();
+  document.getElementById('adminPanel').classList.add('active');
+}
+
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.remove('active');
+}
+
+function renderAdmin() {
+  orders = JSON.parse(localStorage.getItem('domidog_orders') || '[]');
+
+  // Stats
+  const total = orders.length;
+  const pending = orders.filter(o => o.status === 'pending').length;
+  const preparing = orders.filter(o => o.status === 'preparing').length;
+  const revenue = orders.reduce((s, o) => s + o.total, 0);
+
+  document.getElementById('adminStats').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-value">${total}</div>
+      <div class="stat-label">Total Pedidos</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${pending}</div>
+      <div class="stat-label">Pendientes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${preparing}</div>
+      <div class="stat-label">Preparando</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="font-size:1.4rem;">$${revenue.toLocaleString('es-CO')}</div>
+      <div class="stat-label">Ventas Totales</div>
+    </div>`;
+
+  // Orders
+  const list = document.getElementById('ordersList');
+  if (orders.length === 0) {
+    list.innerHTML = `<div class="no-orders">🌭 Aún no hay pedidos recibidos.</div>`;
+    return;
+  }
+
+  const statusLabel = { pending: '⏳ Pendiente', preparing: '🔥 Preparando', delivered: '✅ Entregado' };
+  const statusClass = { pending: 'status-pending', preparing: 'status-preparing', delivered: 'status-delivered' };
+  const cardClass  = { pending: 'pending', preparing: 'preparing', delivered: 'delivered' };
+
+  list.innerHTML = orders.map(o => `
+    <div class="order-card ${cardClass[o.status]}" id="order-${o.id}">
+      <div class="order-top">
+        <div>
+          <div class="order-num">Pedido #${o.id}</div>
+          <div class="order-time">🕐 ${o.time}</div>
+        </div>
+        <span class="order-status-badge ${statusClass[o.status]}">${statusLabel[o.status]}</span>
+      </div>
+      <div class="order-client">👤 ${o.client} · 📞 ${o.phone}</div>
+      <div class="order-address">📍 ${o.address}</div>
+      ${o.notes ? `<div class="order-address">💬 ${o.notes}</div>` : ''}
+      <div class="order-items-list">
+        ${o.items.map(i => `• ${i.qty}x ${i.name} — $${(i.price*i.qty).toLocaleString('es-CO')}`).join('<br>')}
+        <br><strong style="color:var(--naranja);">+ Domicilio: $4.000 – $5.000</strong>
+      </div>
+      <div class="order-total-row">
+        <div class="order-total-val">Total: $${o.total.toLocaleString('es-CO')} COP</div>
+        <div class="order-actions">
+          ${o.status === 'pending' ? `<button class="action-btn btn-prepare" onclick="updateStatus(${o.id},'preparing')">🔥 Preparando</button>` : ''}
+          ${o.status === 'preparing' ? `<button class="action-btn btn-deliver" onclick="updateStatus(${o.id},'delivered')">✅ Entregado</button>` : ''}
+          <button class="action-btn btn-delete" onclick="deleteOrder(${o.id})">🗑️ Eliminar</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateStatus(id, status) {
+  const o = orders.find(o => o.id === id);
+  if (o) {
+    o.status = status;
+    localStorage.setItem('domidog_orders', JSON.stringify(orders));
+    renderAdmin();
+  }
+}
+
+function deleteOrder(id) {
+  if (!confirm('¿Eliminar este pedido?')) return;
+  orders = orders.filter(o => o.id !== id);
+  localStorage.setItem('domidog_orders', JSON.stringify(orders));
+  renderAdmin();
+}
+
+// ── INIT ──
+renderMenu();
+</script>
+</body>
+</html>
