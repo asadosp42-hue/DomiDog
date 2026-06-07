@@ -13,21 +13,31 @@
       --oscuro: #1A0A00;
       --crema: #FFF8EE;
       --cafe: #5C2D0A;
-      --sombra: 0 8px 32px rgba(232,25,44,0.18);
+      --verde: #25D366;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Nunito', sans-serif; background: var(--oscuro); color: var(--crema); min-height: 100vh; padding-bottom: 100px; }
+    body { font-family: 'Nunito', sans-serif; background: var(--oscuro); color: var(--crema); min-height: 100vh; padding-bottom: 110px; }
 
     /* HEADER */
     header { background: var(--rojo); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); border-bottom: 4px solid var(--amarillo); }
-    .logo-area { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
+    .logo-area { display: flex; align-items: center; gap: 12px; padding: 12px 0; cursor: pointer; user-select: none; }
     .logo-icon { font-size: 2.8rem; animation: bounce 2s infinite; }
     @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
     .logo-text { font-family: 'Bangers', cursive; font-size: 2.4rem; letter-spacing: 3px; color: var(--amarillo); text-shadow: 3px 3px 0 var(--oscuro); line-height: 1; }
     .logo-sub { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; color: var(--crema); text-transform: uppercase; opacity: 0.9; }
-    .header-nav { display: flex; gap: 12px; align-items: center; }
-    /* logo-area clickeable para acceso secreto */
-    .logo-area { cursor: pointer; user-select: none; }
+
+    /* BANNER HORARIO */
+    .horario-banner { background: linear-gradient(90deg,#1a3a1a,#0d2a0d); border-bottom: 2px solid var(--verde); padding: 10px 2rem; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; font-size: 0.88rem; font-weight: 700; color: #a8f0c0; text-align: center; }
+    .horario-open  { color: #4dff91; background: rgba(77,255,145,0.12); border: 1px solid #4dff91; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; }
+    .horario-closed { color: #ff6b6b; background: rgba(255,107,107,0.12); border: 1px solid #ff6b6b; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; }
+
+    /* BANNER CERRADO (overlay sobre el menú) */
+    .closed-overlay { display: none; background: linear-gradient(135deg,rgba(26,10,0,0.97),rgba(60,10,0,0.97)); border: 2px solid var(--rojo); border-radius: 20px; padding: 40px 28px; text-align: center; margin: 30px 0; }
+    .closed-overlay.show { display: block; }
+    .closed-icon { font-size: 4rem; margin-bottom: 12px; }
+    .closed-title { font-family: 'Bangers', cursive; font-size: 2.2rem; color: var(--rojo); letter-spacing: 2px; margin-bottom: 8px; }
+    .closed-msg { color: #c8a07a; font-size: 0.95rem; line-height: 1.7; }
+    .closed-schedule { color: var(--amarillo); font-weight: 900; font-size: 1rem; margin-top: 10px; }
 
     /* HERO */
     .hero { background: linear-gradient(135deg, var(--cafe) 0%, var(--oscuro) 50%, #2d0a00 100%); padding: 60px 2rem; text-align: center; position: relative; overflow: hidden; }
@@ -37,8 +47,21 @@
     .delivery-badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(90deg, var(--naranja), var(--rojo)); padding: 12px 28px; border-radius: 50px; font-weight: 900; font-size: 1rem; letter-spacing: 1px; box-shadow: 0 6px 20px rgba(255,107,0,0.4); animation: pulse 2.5s infinite; }
     @keyframes pulse { 0%,100%{box-shadow:0 6px 20px rgba(255,107,0,0.4)} 50%{box-shadow:0 6px 30px rgba(255,107,0,0.7)} }
 
+    /* CAJA EVENTOS */
+    .eventos-box { max-width: 700px; margin: 0 auto 0; padding: 0 2rem; }
+    .eventos-card { background: linear-gradient(135deg,#0d2a1a,#1a3a0d); border: 2px solid var(--verde); border-radius: 20px; padding: 24px 28px; display: flex; align-items: flex-start; gap: 18px; }
+    .eventos-icon { font-size: 2.8rem; flex-shrink: 0; }
+    .eventos-title { font-family: 'Bangers', cursive; font-size: 1.4rem; color: var(--verde); letter-spacing: 1px; margin-bottom: 6px; }
+    .eventos-desc { font-size: 0.85rem; color: #a8f0c0; line-height: 1.6; margin-bottom: 14px; }
+    .eventos-form { display: flex; gap: 8px; flex-wrap: wrap; }
+    .eventos-input { flex: 1; min-width: 180px; padding: 10px 14px; background: #0a1f0d; border: 2px solid var(--verde); border-radius: 12px; color: var(--crema); font-family: 'Nunito', sans-serif; font-size: 0.9rem; outline: none; }
+    .eventos-input::placeholder { color: #3a7a4a; }
+    .eventos-btn { background: var(--verde); color: #0a1f0d; border: none; padding: 10px 20px; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.88rem; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+    .eventos-btn:hover { background: #1ebe5d; transform: scale(1.04); }
+    .eventos-success { color: #4dff91; font-weight: 700; font-size: 0.88rem; margin-top: 8px; display: none; }
+
     /* MENÚ */
-    .menu-section { padding: 50px 2rem; max-width: 1100px; margin: 0 auto; }
+    .menu-section { padding: 40px 2rem; max-width: 1100px; margin: 0 auto; }
     .section-title { font-family: 'Bangers', cursive; font-size: 2.5rem; color: var(--amarillo); letter-spacing: 3px; margin-bottom: 30px; text-align: center; position: relative; }
     .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--rojo); margin: 8px auto 0; border-radius: 2px; }
     .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
@@ -53,69 +76,20 @@
     .price span { font-size: 1rem; color: #c8a07a; }
     .add-btn { background: var(--rojo); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
     .add-btn:hover { background: var(--naranja); transform: scale(1.08); }
+    .add-btn:disabled { background: #3d1800; color: #7a4a2a; cursor: not-allowed; transform: none; }
     .popular-badge { position: absolute; top: 14px; right: 14px; background: var(--amarillo); color: var(--oscuro); font-size: 0.7rem; font-weight: 900; padding: 4px 10px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; }
 
-    /* ── CARRITO FLOTANTE SIEMPRE VISIBLE ── */
-    .floating-cart {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 150;
-      background: linear-gradient(90deg, var(--rojo), var(--naranja));
-      color: white;
-      border: none;
-      padding: 16px 32px;
-      border-radius: 60px;
-      font-family: 'Bangers', cursive;
-      font-size: 1.35rem;
-      letter-spacing: 2px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 8px 30px rgba(232,25,44,0.55), 0 2px 8px rgba(0,0,0,0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
-      white-space: nowrap;
-      min-width: 220px;
-      justify-content: center;
-    }
+    /* CARRITO FLOTANTE */
+    .floating-cart { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 150; background: linear-gradient(90deg, var(--rojo), var(--naranja)); color: white; border: none; padding: 16px 32px; border-radius: 60px; font-family: 'Bangers', cursive; font-size: 1.35rem; letter-spacing: 2px; cursor: pointer; display: flex; align-items: center; gap: 12px; box-shadow: 0 8px 30px rgba(232,25,44,0.55), 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s, box-shadow 0.2s; white-space: nowrap; min-width: 220px; justify-content: center; }
     .floating-cart:hover { transform: translateX(-50%) scale(1.06); box-shadow: 0 12px 40px rgba(232,25,44,0.7); }
     .floating-cart:active { transform: translateX(-50%) scale(0.97); }
-    .floating-cart .fc-icon { font-size: 1.5rem; }
-    .floating-cart .fc-badge {
-      background: var(--amarillo);
-      color: var(--oscuro);
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      flex-shrink: 0;
-      transition: transform 0.2s;
-    }
+    .floating-cart .fc-badge { background: var(--amarillo); color: var(--oscuro); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-family: 'Nunito', sans-serif; font-weight: 900; flex-shrink: 0; }
     .floating-cart.bump .fc-badge { animation: badgeBump 0.3s ease; }
     @keyframes badgeBump { 0%{transform:scale(1)} 50%{transform:scale(1.5)} 100%{transform:scale(1)} }
-    .floating-cart .fc-total {
-      font-size: 1rem;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      opacity: 0.92;
-      letter-spacing: 0;
-    }
-    /* Cuando carrito vacío: más sutil pero siempre visible */
-    .floating-cart.empty {
-      background: #3d1800;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-      opacity: 0.85;
-    }
+    .floating-cart.empty { background: #3d1800; box-shadow: 0 4px 16px rgba(0,0,0,0.4); opacity: 0.85; }
     .floating-cart.empty:hover { opacity: 1; }
 
-    /* MODAL CARRITO */
+    /* MODAL */
     .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
     .overlay.active { display: flex; }
     .modal { background: var(--oscuro); border: 3px solid var(--rojo); border-radius: 24px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; padding: 30px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
@@ -136,83 +110,120 @@
     .form-input { width: 100%; padding: 12px 14px; background: #2d1000; border: 2px solid #3d1800; border-radius: 12px; color: var(--crema); font-family: 'Nunito', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
     .form-input:focus { border-color: var(--amarillo); }
     .form-input::placeholder { color: #7a4a2a; }
-    /* WhatsApp field highlight */
-    .form-input.whatsapp-input { border-color: #25D366; }
-    .form-input.whatsapp-input:focus { border-color: #1ebe5d; box-shadow: 0 0 0 3px rgba(37,211,102,0.15); }
-    .whatsapp-label { color: #25D366 !important; }
-    .whatsapp-badge { background: #25D366; color: white; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; margin-left: 6px; vertical-align: middle; font-weight: 900; letter-spacing: 0.5px; }
+    .wa-input { border-color: var(--verde) !important; }
+    .wa-input:focus { box-shadow: 0 0 0 3px rgba(37,211,102,0.15); }
+    .wa-label { color: var(--verde) !important; }
+    .wa-hint { font-size: 0.75rem; color: var(--verde); margin-top: 4px; font-weight: 700; }
     .order-btn { width: 100%; background: linear-gradient(90deg, var(--rojo), var(--naranja)); color: white; border: none; padding: 16px; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.5rem; letter-spacing: 2px; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
     .order-btn:hover { transform: scale(1.03); }
     .order-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-    /* PANEL DUEÑO */
-    .admin-panel { display: none; position: fixed; inset: 0; background: #0d0500; z-index: 300; overflow-y: auto; }
-    .admin-panel.active { display: block; }
-    .admin-header { background: var(--cafe); padding: 20px 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--amarillo); position: sticky; top: 0; z-index: 10; }
-    .admin-title { font-family: 'Bangers', cursive; font-size: 2rem; color: var(--amarillo); letter-spacing: 2px; }
-    .admin-close { background: var(--rojo); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-family: 'Nunito', sans-serif; font-weight: 900; cursor: pointer; }
-    .admin-content { padding: 30px; max-width: 900px; margin: 0 auto; }
-    .admin-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 36px; }
-    .stat-card { background: #2d1000; border: 2px solid #3d1800; border-radius: 16px; padding: 20px; text-align: center; }
-    .stat-value { font-family: 'Bangers', cursive; font-size: 2.2rem; color: var(--amarillo); }
-    .stat-label { font-size: 0.78rem; color: #c8a07a; font-weight: 700; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
-    .admin-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-    .tab-btn { padding: 10px 22px; border-radius: 30px; border: 2px solid #3d1800; background: transparent; color: #c8a07a; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
-    .tab-btn.active { background: var(--rojo); border-color: var(--rojo); color: white; }
-    .tab-btn:hover:not(.active) { border-color: var(--amarillo); color: var(--amarillo); }
-    .orders-list { display: flex; flex-direction: column; gap: 16px; }
-    .order-card { background: #2d1000; border: 2px solid #3d1800; border-radius: 16px; padding: 20px; }
-    .order-card.pending { border-left: 5px solid var(--amarillo); }
-    .order-card.preparing { border-left: 5px solid var(--naranja); }
-    .order-card.delivered { border-left: 5px solid #28a745; }
-    .order-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-    .order-num { font-family: 'Bangers', cursive; font-size: 1.3rem; color: var(--amarillo); }
-    .order-time { font-size: 0.78rem; color: #c8a07a; }
-    .order-status-badge { padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
-    .status-pending { background: rgba(255,215,0,0.15); color: var(--amarillo); border: 1px solid var(--amarillo); }
-    .status-preparing { background: rgba(255,107,0,0.15); color: var(--naranja); border: 1px solid var(--naranja); }
-    .status-delivered { background: rgba(40,167,69,0.15); color: #28a745; border: 1px solid #28a745; }
-    .order-client { font-weight: 700; color: var(--crema); margin-bottom: 4px; }
-    .order-address { font-size: 0.85rem; color: #c8a07a; margin-bottom: 10px; }
-    /* WhatsApp link en pedidos admin */
-    .order-wa { font-size: 0.85rem; color: #25D366; margin-bottom: 4px; font-weight: 700; }
-    .order-wa a { color: #25D366; text-decoration: none; }
-    .order-wa a:hover { text-decoration: underline; }
-    .order-items-list { background: #1a0800; border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 0.88rem; color: #e8c99a; line-height: 1.8; }
-    .order-total-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-    .order-total-val { font-family: 'Bangers', cursive; font-size: 1.4rem; color: var(--amarillo); }
-    .order-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .action-btn { padding: 7px 16px; border-radius: 20px; border: none; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
-    .btn-prepare { background: var(--naranja); color: white; }
-    .btn-deliver { background: #28a745; color: white; }
-    .no-orders { text-align: center; padding: 60px 0; color: #7a4a2a; font-size: 1.1rem; }
-    .history-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #2d1000; border-radius: 10px; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; border-left: 3px solid #28a745; }
-    .history-info { font-size: 0.85rem; color: #c8a07a; }
-    .history-name { font-weight: 700; color: var(--crema); font-size: 0.95rem; }
-    .history-total { font-family: 'Bangers', cursive; color: #28a745; font-size: 1.2rem; }
-    .loading { text-align: center; padding: 40px; color: #c8a07a; font-size: 1rem; }
-    .spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid #3d1800; border-top-color: var(--amarillo); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .new-order-notif { position: fixed; bottom: 90px; right: 24px; background: var(--rojo); color: white; padding: 16px 24px; border-radius: 16px; font-weight: 900; font-size: 1rem; z-index: 400; box-shadow: 0 8px 30px rgba(0,0,0,0.5); animation: slideIn 0.4s ease; display: none; }
-    @keyframes slideIn { from{transform:translateY(80px);opacity:0} to{transform:translateY(0);opacity:1} }
     .success-screen { text-align: center; padding: 30px 0; }
     .success-emoji { font-size: 5rem; margin-bottom: 16px; display: block; animation: pop 0.4s ease; }
     @keyframes pop { 0%{transform:scale(0)} 70%{transform:scale(1.2)} 100%{transform:scale(1)} }
     .success-title { font-family: 'Bangers', cursive; font-size: 2.2rem; color: var(--amarillo); letter-spacing: 2px; margin-bottom: 10px; }
     .success-msg { color: #c8a07a; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
 
+    /* PANEL DUEÑO */
+    .admin-panel { display: none; position: fixed; inset: 0; background: #0d0500; z-index: 300; overflow-y: auto; }
+    .admin-panel.active { display: block; }
+    .admin-header { background: var(--cafe); padding: 20px 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--amarillo); position: sticky; top: 0; z-index: 10; flex-wrap: wrap; gap: 10px; }
+    .admin-title { font-family: 'Bangers', cursive; font-size: 2rem; color: var(--amarillo); letter-spacing: 2px; }
+    .admin-close { background: var(--rojo); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-family: 'Nunito', sans-serif; font-weight: 900; cursor: pointer; }
+    .admin-content { padding: 30px; max-width: 980px; margin: 0 auto; }
+    .admin-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; margin-bottom: 30px; }
+    .stat-card { background: #2d1000; border: 2px solid #3d1800; border-radius: 16px; padding: 20px; text-align: center; }
+    .stat-value { font-family: 'Bangers', cursive; font-size: 2.2rem; color: var(--amarillo); }
+    .stat-label { font-size: 0.75rem; color: #c8a07a; font-weight: 700; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+    .admin-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .tab-btn { padding: 10px 20px; border-radius: 30px; border: 2px solid #3d1800; background: transparent; color: #c8a07a; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active { background: var(--rojo); border-color: var(--rojo); color: white; }
+    .tab-btn:hover:not(.active) { border-color: var(--amarillo); color: var(--amarillo); }
+
+    /* FILTRO FECHA */
+    .date-filter { background: #2d1000; border: 2px solid #3d1800; border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; }
+    .date-filter-title { font-family: 'Bangers', cursive; color: var(--amarillo); font-size: 1.2rem; letter-spacing: 1px; margin-bottom: 14px; }
+    .date-filter-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+    .date-filter-group { display: flex; flex-direction: column; gap: 5px; }
+    .date-filter-label { font-size: 0.78rem; font-weight: 700; color: #c8a07a; text-transform: uppercase; letter-spacing: 1px; }
+    .date-filter-input { padding: 10px 14px; background: #1a0800; border: 2px solid #3d1800; border-radius: 10px; color: var(--crema); font-family: 'Nunito', sans-serif; font-size: 0.9rem; outline: none; cursor: pointer; }
+    .date-filter-input:focus { border-color: var(--amarillo); }
+    .date-filter-input::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+    .date-filter-btn { padding: 10px 20px; border-radius: 10px; border: none; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .btn-filter-apply { background: var(--amarillo); color: var(--oscuro); }
+    .btn-filter-clear  { background: #3d1800; color: #c8a07a; }
+    .btn-filter-apply:hover { background: #ffc800; }
+    .btn-filter-clear:hover  { background: #5d2800; color: var(--crema); }
+    .date-filter-result { margin-top: 12px; font-size: 0.82rem; color: var(--naranja); font-weight: 700; }
+
+    /* RESUMEN FILTRO */
+    .filter-summary { background: #1a0800; border: 2px solid var(--amarillo); border-radius: 14px; padding: 16px 20px; margin-bottom: 20px; display: none; }
+    .filter-summary.show { display: block; }
+    .filter-summary-title { font-family: 'Bangers', cursive; color: var(--amarillo); font-size: 1.1rem; margin-bottom: 10px; }
+    .filter-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+    .filter-stat { background: #2d1000; border-radius: 10px; padding: 10px 14px; text-align: center; }
+    .filter-stat-val { font-family: 'Bangers', cursive; font-size: 1.5rem; color: var(--amarillo); }
+    .filter-stat-lbl { font-size: 0.72rem; color: #c8a07a; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+
+    /* PEDIDOS */
+    .orders-list { display: flex; flex-direction: column; gap: 16px; }
+    .order-card { background: #2d1000; border: 2px solid #3d1800; border-radius: 16px; padding: 20px; }
+    .order-card.pending   { border-left: 5px solid var(--amarillo); }
+    .order-card.preparing { border-left: 5px solid var(--naranja); }
+    .order-card.delivered { border-left: 5px solid #28a745; }
+    .order-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .order-num  { font-family: 'Bangers', cursive; font-size: 1.3rem; color: var(--amarillo); }
+    .order-time { font-size: 0.78rem; color: #c8a07a; }
+    .order-status-badge { padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+    .status-pending   { background: rgba(255,215,0,0.15);  color: var(--amarillo); border: 1px solid var(--amarillo); }
+    .status-preparing { background: rgba(255,107,0,0.15);  color: var(--naranja);  border: 1px solid var(--naranja); }
+    .status-delivered { background: rgba(40,167,69,0.15);  color: #28a745;         border: 1px solid #28a745; }
+    .order-client  { font-weight: 700; color: var(--crema); margin-bottom: 4px; }
+    .order-wa-row  { font-size: 0.85rem; color: var(--verde); margin-bottom: 4px; font-weight: 700; }
+    .order-wa-row a { color: var(--verde); text-decoration: none; }
+    .order-wa-row a:hover { text-decoration: underline; }
+    .order-address { font-size: 0.85rem; color: #c8a07a; margin-bottom: 6px; }
+    .order-items-list { background: #1a0800; border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 0.88rem; color: #e8c99a; line-height: 1.8; }
+    .order-total-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .order-total-val { font-family: 'Bangers', cursive; font-size: 1.4rem; color: var(--amarillo); }
+    .order-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .action-btn  { padding: 7px 16px; border-radius: 20px; border: none; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+    .btn-prepare { background: var(--naranja); color: white; }
+    .btn-deliver { background: #28a745; color: white; }
+    .no-orders   { text-align: center; padding: 60px 0; color: #7a4a2a; font-size: 1.1rem; }
+
+    /* HISTORIAL */
+    .history-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #2d1000; border-radius: 10px; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; border-left: 3px solid #28a745; }
+    .history-info { font-size: 0.82rem; color: #c8a07a; }
+    .history-name { font-weight: 700; color: var(--crema); font-size: 0.9rem; }
+    .history-total { font-family: 'Bangers', cursive; color: #28a745; font-size: 1.2rem; flex-shrink: 0; }
+
+    /* EVENTOS ADMIN */
+    .evento-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #0d2a1a; border: 1px solid var(--verde); border-radius: 12px; margin-bottom: 8px; gap: 10px; flex-wrap: wrap; }
+    .evento-wa  { color: var(--verde); font-weight: 900; font-size: 0.95rem; }
+    .evento-wa a { color: var(--verde); text-decoration: none; }
+    .evento-wa a:hover { text-decoration: underline; }
+    .evento-time { font-size: 0.78rem; color: #a8f0c0; }
+
+    /* MISC */
+    .loading { text-align: center; padding: 40px; color: #c8a07a; }
+    .spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid #3d1800; border-top-color: var(--amarillo); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .new-order-notif { position: fixed; bottom: 90px; right: 24px; background: var(--rojo); color: white; padding: 16px 24px; border-radius: 16px; font-weight: 900; font-size: 1rem; z-index: 400; box-shadow: 0 8px 30px rgba(0,0,0,0.5); animation: slideIn 0.4s ease; display: none; }
+    @keyframes slideIn { from{transform:translateY(80px);opacity:0} to{transform:translateY(0);opacity:1} }
+
     footer { background: var(--cafe); text-align: center; padding: 24px; border-top: 3px solid var(--rojo); color: #c8a07a; font-size: 0.85rem; font-weight: 700; }
     footer span { color: var(--amarillo); }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #1a0800; }
     ::-webkit-scrollbar-thumb { background: var(--rojo); border-radius: 3px; }
-
     @media (max-width: 600px) {
       header { padding: 0 14px; }
       .logo-text { font-size: 1.8rem; }
       .logo-icon { font-size: 2rem; }
-      .menu-section { padding: 30px 14px; }
+      .menu-section { padding: 24px 14px; }
       .floating-cart { bottom: 16px; padding: 14px 22px; font-size: 1.1rem; min-width: 180px; }
+      .eventos-card { flex-direction: column; }
+      .admin-content { padding: 18px; }
     }
   </style>
 </head>
@@ -228,14 +239,43 @@
   </div>
 </header>
 
+<!-- BANNER HORARIO -->
+<div class="horario-banner" id="horarioBanner">
+  <span>🕔 Horario: Jueves a Domingo · 5:00 PM – 10:00 PM</span>
+  <span id="estadoBadge" class="horario-closed">● Cerrado</span>
+</div>
+
 <section class="hero">
   <h1 class="hero-title">¡DOMI DOG!</h1>
   <p class="hero-sub">Los mejores perros calientes y hamburguesas 🔥</p>
   <div class="delivery-badge">🛵 Domicilio disponible · $4.000 – $5.000</div>
 </section>
 
+<!-- CAJA EVENTOS -->
+<div class="eventos-box" style="margin-top:32px;margin-bottom:10px;">
+  <div class="eventos-card">
+    <div class="eventos-icon">🎉</div>
+    <div style="flex:1">
+      <div class="eventos-title">¿Pedidos para Eventos?</div>
+      <div class="eventos-desc">¿Tienes un evento, fiesta o reunión especial? Déjanos tu WhatsApp y te contactamos para organizar tu pedido personalizado.</div>
+      <div class="eventos-form">
+        <input class="eventos-input" id="eventoWa" type="tel" placeholder="Ej: 310 000 0000" />
+        <button class="eventos-btn" onclick="enviarEvento()">📲 Enviar WhatsApp</button>
+      </div>
+      <div class="eventos-success" id="eventoSuccess">✅ ¡Listo! Te contactaremos pronto 🌭</div>
+    </div>
+  </div>
+</div>
+
 <section class="menu-section">
   <h2 class="section-title">🌭 Nuestro Menú</h2>
+  <!-- OVERLAY CERRADO -->
+  <div class="closed-overlay" id="closedOverlay">
+    <div class="closed-icon">🌙</div>
+    <div class="closed-title">Estamos Cerrados</div>
+    <p class="closed-msg">En este momento no estamos tomando pedidos.<br>¡Vuelve en nuestro horario de atención!</p>
+    <p class="closed-schedule">📅 Jueves a Domingo · 5:00 PM – 10:00 PM</p>
+  </div>
   <div class="menu-grid" id="menuGrid"></div>
 </section>
 
@@ -243,9 +283,9 @@
   <p>© 2025 <span>DOMI DOG</span> · Pedidos a domicilio · Hecho con ❤️ y mucha mostaza</p>
 </footer>
 
-<!-- CARRITO FLOTANTE SIEMPRE VISIBLE -->
+<!-- CARRITO FLOTANTE -->
 <button class="floating-cart empty" id="floatingCart" onclick="openCart()">
-  <span class="fc-icon">🛒</span>
+  <span>🛒</span>
   <span id="fcLabel">Mi Pedido</span>
   <span class="fc-badge" id="fcCount">0</span>
 </button>
@@ -269,45 +309,77 @@
   </div>
 </div>
 
-<!-- NOTIFICACIÓN NUEVO PEDIDO -->
 <div class="new-order-notif" id="newOrderNotif">🔔 ¡Nuevo pedido recibido!</div>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-const FIREBASE_CONFIG = {
+const app = initializeApp({
   apiKey: "AIzaSyCPSF58C1Trhv7HCVLxDrKM0RdWy7dSZ5c",
   authDomain: "domidog.firebaseapp.com",
   databaseURL: "https://domidog-default-rtdb.firebaseio.com",
   projectId: "domidog",
   storageBucket: "domidog.firebasestorage.app",
   messagingSenderId: "944281255622",
-  appId: "1:944281255622:web:9457d2fa04fadea7cfe1c7",
-  measurementId: "G-XRD4R4RCJV"
-};
+  appId: "1:944281255622:web:9457d2fa04fadea7cfe1c7"
+});
+const db        = getDatabase(app);
+const ordersRef = ref(db, 'orders');
+const eventosRef= ref(db, 'eventos');
 
-let db, ordersRef;
-const app = initializeApp(FIREBASE_CONFIG);
-db = getDatabase(app);
-ordersRef = ref(db, 'orders');
+// ── HORARIO ──
+// Jueves=4, Viernes=5, Sábado=6, Domingo=0  · 17:00–22:00 hora Colombia (UTC-5)
+function isOpen() {
+  const now = new Date();
+  // Hora Colombia: UTC-5
+  const co = new Date(now.toLocaleString('en-US', { timeZone: 'America/Bogota' }));
+  const day  = co.getDay();    // 0=Dom,1=Lun,...,6=Sáb
+  const hour = co.getHours();
+  const min  = co.getMinutes();
+  const openDays = [0, 4, 5, 6]; // Dom, Jue, Vie, Sáb
+  const afterOpen  = hour > 17 || (hour === 17 && min >= 0);
+  const beforeClose= hour < 22;
+  return openDays.includes(day) && afterOpen && beforeClose;
+}
+
+function updateHorarioUI() {
+  const open = isOpen();
+  const badge = document.getElementById('estadoBadge');
+  const overlay = document.getElementById('closedOverlay');
+  const addBtns = document.querySelectorAll('.add-btn');
+  const fc = document.getElementById('floatingCart');
+
+  if (open) {
+    badge.textContent = '● Abierto';
+    badge.className = 'horario-open';
+    overlay.classList.remove('show');
+    addBtns.forEach(b => b.disabled = false);
+  } else {
+    badge.textContent = '● Cerrado';
+    badge.className = 'horario-closed';
+    overlay.classList.add('show');
+    addBtns.forEach(b => { b.disabled = true; b.textContent = 'Cerrado'; });
+  }
+}
 
 // ── MENÚ ──
 const menu = [
-  { id:1, name:"Perro Sencillo",      desc:"Salchicha jumbo, pan suave, salsas a tu gusto",                          price:4000,  emoji:"🌭", popular:false },
-  { id:2, name:"Perro + Tocineta",    desc:"Salchicha jumbo con tocineta crujiente, pan tostado y salsas",            price:6000,  emoji:"🌭", popular:true  },
-  { id:3, name:"Perro Apanado",       desc:"Salchicha apanada crocante, pan suave, salsas especiales",                price:4500,  emoji:"🌭", popular:false },
-  { id:4, name:"Hamburguesa Sencilla",desc:"Carne jugosa, lechuga, tomate, queso y salsas de la casa",               price:6000,  emoji:"🍔", popular:false },
-  { id:5, name:"Hamburguesa Doble",   desc:"Doble carne, doble queso, tocineta, lechuga, tomate y salsas",           price:12000, emoji:"🍔", popular:true  }
+  { id:1, name:"Perro Sencillo",      desc:"Salchicha jumbo, pan suave, salsas a tu gusto",                price:4000,  emoji:"🌭", popular:false },
+  { id:2, name:"Perro + Tocineta",    desc:"Salchicha jumbo con tocineta crujiente, pan tostado y salsas", price:6000,  emoji:"🌭", popular:true  },
+  { id:3, name:"Perro Apanado",       desc:"Salchicha apanada crocante, pan suave, salsas especiales",     price:4500,  emoji:"🌭", popular:false },
+  { id:4, name:"Hamburguesa Sencilla",desc:"Carne jugosa, lechuga, tomate, queso y salsas de la casa",    price:6000,  emoji:"🍔", popular:false },
+  { id:5, name:"Hamburguesa Doble",   desc:"Doble carne, doble queso, tocineta, lechuga, tomate y salsas",price:12000, emoji:"🍔", popular:true  }
 ];
 
 let cart = [];
 let knownOrderKeys = new Set();
-let adminOpen = false;
-let currentTab = 'activos';
+let adminOpen   = false;
+let currentTab  = 'activos';
+// Filtro fecha
+let filterFrom  = '';
+let filterTo    = '';
 
-// ── RENDER MENÚ ──
 function renderMenu() {
   document.getElementById('menuGrid').innerHTML = menu.map(item => `
     <div class="card">
@@ -322,17 +394,18 @@ function renderMenu() {
         </div>
       </div>
     </div>`).join('');
+  updateHorarioUI();
 }
 
 // ── CARRITO ──
 window.addToCart = function(id, btn) {
+  if (!isOpen()) return;
   const item = menu.find(m => m.id === id);
   const ex = cart.find(c => c.id === id);
   ex ? ex.qty++ : cart.push({...item, qty:1});
   updateCartUI();
   btn.style.transform = 'scale(0.88)';
   setTimeout(() => btn.style.transform = '', 150);
-  // Efecto bump en el badge flotante
   const fc = document.getElementById('floatingCart');
   fc.classList.remove('bump');
   void fc.offsetWidth;
@@ -341,27 +414,23 @@ window.addToCart = function(id, btn) {
 };
 
 function totalItems() { return cart.reduce((s,c) => s+c.qty, 0); }
-function subtotal() { return cart.reduce((s,c) => s + c.price * c.qty, 0); }
+function subtotal()   { return cart.reduce((s,c) => s+c.price*c.qty, 0); }
 
 function updateCartUI() {
   const count = totalItems();
-  const sub = subtotal();
-  const fc = document.getElementById('floatingCart');
-  const fcCount = document.getElementById('fcCount');
-  const fcLabel = document.getElementById('fcLabel');
-
-  fcCount.textContent = count;
-
+  const sub   = subtotal();
+  const fc    = document.getElementById('floatingCart');
+  document.getElementById('fcCount').textContent = count;
   if (count === 0) {
     fc.classList.add('empty');
-    fcLabel.textContent = 'Mi Pedido';
+    document.getElementById('fcLabel').textContent = 'Mi Pedido';
   } else {
     fc.classList.remove('empty');
-    fcLabel.textContent = `$${sub.toLocaleString('es-CO')}`;
+    document.getElementById('fcLabel').textContent = `$${sub.toLocaleString('es-CO')}`;
   }
 }
 
-window.openCart = function() { renderCart(); document.getElementById('cartOverlay').classList.add('active'); };
+window.openCart  = function() { renderCart(); document.getElementById('cartOverlay').classList.add('active'); };
 window.closeCart = function() { document.getElementById('cartOverlay').classList.remove('active'); };
 
 function renderCart(success=false) {
@@ -370,10 +439,16 @@ function renderCart(success=false) {
     el.innerHTML = `<div class="success-screen">
       <span class="success-emoji">🎉</span>
       <div class="success-title">¡PEDIDO ENVIADO!</div>
-      <p class="success-msg">Tu pedido fue recibido con éxito.<br>Pronto estamos preparando todo para ti 🌭🍔<br><br>
-      <strong style="color:var(--amarillo)">Recuerda: domicilio adicional $4.000 – $5.000 según tu zona.</strong></p>
+      <p class="success-msg">Tu pedido fue recibido con éxito.<br>Te avisaremos por WhatsApp cuando esté listo 🌭🍔<br><br>
+      <strong style="color:var(--amarillo)">Domicilio adicional: $4.000 – $5.000 según tu zona.</strong></p>
       <button class="order-btn" onclick="closeCart()">¡Listo! 🙌</button>
     </div>`;
+    return;
+  }
+  if (!isOpen()) {
+    el.innerHTML = `<div class="modal-title">🛒 Mi Pedido</div>
+      <div class="cart-empty"><div style="font-size:3rem;margin-bottom:12px">🌙</div>
+      Estamos cerrados.<br><strong style="color:var(--amarillo)">Jueves a Domingo · 5 PM – 10 PM</strong></div>`;
     return;
   }
   if (cart.length === 0) {
@@ -398,16 +473,12 @@ function renderCart(success=false) {
         <input class="form-input" id="clientName" placeholder="Ej: María García"/>
       </div>
       <div class="form-group">
-        <label class="form-label">📞 Teléfono *</label>
-        <input class="form-input" id="clientPhone" placeholder="Ej: 310 000 0000" type="tel"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label whatsapp-label">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style="width:16px;height:16px;vertical-align:middle;margin-right:4px;"/>
-          WhatsApp * <span class="whatsapp-badge">Obligatorio</span>
+        <label class="form-label wa-label">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style="width:15px;height:15px;vertical-align:middle;margin-right:4px;"/>
+          WhatsApp *
         </label>
-        <input class="form-input whatsapp-input" id="clientWhatsapp" placeholder="Ej: 310 000 0000 (con código de país si aplica)" type="tel"/>
-        <div style="font-size:0.75rem;color:#25D366;margin-top:4px;font-weight:700;">📲 Te avisaremos por WhatsApp cuando tu pedido esté listo</div>
+        <input class="form-input wa-input" id="clientWhatsapp" placeholder="Ej: 310 000 0000" type="tel"/>
+        <div class="wa-hint">📲 Te avisaremos aquí cuando tu pedido esté listo</div>
       </div>
       <div class="form-group">
         <label class="form-label">📍 Dirección de entrega *</label>
@@ -431,48 +502,46 @@ window.changeQty = function(id, delta) {
 };
 
 window.submitOrder = async function() {
+  if (!isOpen()) { alert('⏰ Lo sentimos, estamos cerrados ahora.'); return; }
   const name     = document.getElementById('clientName').value.trim();
-  const phone    = document.getElementById('clientPhone').value.trim();
   const whatsapp = document.getElementById('clientWhatsapp').value.trim();
   const address  = document.getElementById('clientAddress').value.trim();
   const notes    = document.getElementById('clientNotes').value.trim();
-
-  if (!name || !phone || !whatsapp || !address) {
-    if (!whatsapp) {
-      document.getElementById('clientWhatsapp').style.borderColor = '#e8192c';
-      document.getElementById('clientWhatsapp').focus();
-    }
-    alert('⚠️ Completa todos los campos obligatorios:\nNombre, Teléfono, WhatsApp y Dirección.');
-    return;
+  if (!name || !whatsapp || !address) {
+    if (!whatsapp) { document.getElementById('clientWhatsapp').style.borderColor='#e8192c'; document.getElementById('clientWhatsapp').focus(); }
+    alert('⚠️ Completa todos los campos obligatorios:\nNombre, WhatsApp y Dirección.'); return;
   }
-
   const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
-
+  btn.disabled = true; btn.textContent = 'Enviando...';
   const order = {
-    time: new Date().toLocaleString('es-CO'),
+    time: new Date().toLocaleString('es-CO', {timeZone:'America/Bogota'}),
     timestamp: Date.now(),
-    client: name,
-    phone,
-    whatsapp,
-    address,
-    notes,
+    client: name, whatsapp, address, notes,
     items: cart.map(c => ({ name:c.name, qty:c.qty, price:c.price })),
-    total: subtotal(),
-    status: 'pending'
+    total: subtotal(), status: 'pending'
   };
-
   await push(ordersRef, order);
+  cart = []; updateCartUI(); renderCart(true);
+};
 
-  cart = [];
-  updateCartUI();
-  renderCart(true);
+// ── EVENTOS ──
+window.enviarEvento = async function() {
+  const wa = document.getElementById('eventoWa').value.trim();
+  if (!wa) { document.getElementById('eventoWa').focus(); return; }
+  await push(eventosRef, {
+    whatsapp: wa,
+    time: new Date().toLocaleString('es-CO', {timeZone:'America/Bogota'}),
+    timestamp: Date.now()
+  });
+  document.getElementById('eventoWa').value = '';
+  const s = document.getElementById('eventoSuccess');
+  s.style.display = 'block';
+  setTimeout(() => s.style.display='none', 4000);
 };
 
 // ── ADMIN ──
 window.openAdmin = function() {
-  const pass = prompt('🔑 Contraseña del dueño:');
+  const pass = prompt('🔑 Contraseña:');
   if (pass !== 'domidog123') { alert('❌ Contraseña incorrecta'); return; }
   adminOpen = true;
   document.getElementById('adminPanel').classList.add('active');
@@ -484,56 +553,91 @@ window.closeAdmin = function() {
   document.getElementById('adminPanel').classList.remove('active');
 };
 
+let allOrdersCache = [];
+let allEventosCache = [];
+
 function loadAdmin() {
   onValue(ordersRef, snap => {
     const raw = snap.val() || {};
-    const all = Object.entries(raw).map(([key, val]) => ({...val, key}))
-                  .sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
-    all.forEach(o => {
+    allOrdersCache = Object.entries(raw).map(([key,val]) => ({...val,key}))
+                       .sort((a,b) => (b.timestamp||0)-(a.timestamp||0));
+    allOrdersCache.forEach(o => {
       if (!knownOrderKeys.has(o.key)) {
         if (knownOrderKeys.size > 0) showNotif();
         knownOrderKeys.add(o.key);
       }
     });
-    if (adminOpen) renderAdmin(all);
+    if (adminOpen) renderAdmin();
+  });
+  onValue(eventosRef, snap => {
+    const raw = snap.val() || {};
+    allEventosCache = Object.entries(raw).map(([key,val]) => ({...val,key}))
+                        .sort((a,b) => (b.timestamp||0)-(a.timestamp||0));
+    if (adminOpen) renderAdmin();
   });
 }
 
-function renderAdmin(all) {
-  const activos   = all.filter(o => o.status !== 'delivered');
-  const historial = all.filter(o => o.status === 'delivered');
-  const revenue   = all.reduce((s,o) => s+o.total, 0);
-  const pending   = all.filter(o => o.status === 'pending').length;
-  const preparing = all.filter(o => o.status === 'preparing').length;
-
-  document.getElementById('adminContent').innerHTML = buildAdminHTML(activos, historial, all.length, pending, preparing, revenue);
+function getFilteredOrders() {
+  if (!filterFrom && !filterTo) return allOrdersCache;
+  return allOrdersCache.filter(o => {
+    const d = new Date(o.timestamp||0);
+    const ds = d.toISOString().slice(0,10);
+    if (filterFrom && ds < filterFrom) return false;
+    if (filterTo   && ds > filterTo)   return false;
+    return true;
+  });
 }
 
-function buildAdminHTML(activos, historial, total, pending, preparing, revenue) {
+function renderAdmin() {
+  const filtered  = getFilteredOrders();
+  const activos   = filtered.filter(o => o.status !== 'delivered');
+  const historial = filtered.filter(o => o.status === 'delivered');
+  const revenue   = filtered.reduce((s,o) => s+o.total, 0);
+  const pending   = filtered.filter(o => o.status === 'pending').length;
+  const preparing = filtered.filter(o => o.status === 'preparing').length;
+  const allActivos= allOrdersCache.filter(o => o.status !== 'delivered');
+
+  document.getElementById('adminContent').innerHTML = buildAdminHTML(
+    activos, historial, allActivos, filtered, pending, preparing, revenue
+  );
+}
+
+function waLink(number) {
+  const clean = (number||'').replace(/\D/g,'');
+  return `<a href="https://wa.me/${clean}" target="_blank">📲 ${number}</a>`;
+}
+
+function buildAdminHTML(activos, historial, allActivos, filtered, pending, preparing, revenue) {
   const statusLabel = { pending:'⏳ Pendiente', preparing:'🔥 Preparando', delivered:'✅ Entregado' };
   const statusClass = { pending:'status-pending', preparing:'status-preparing', delivered:'status-delivered' };
   const cardClass   = { pending:'pending', preparing:'preparing', delivered:'delivered' };
 
-  function waLink(number) {
-    const clean = number.replace(/\D/g,'');
-    return `<a href="https://wa.me/${clean}" target="_blank">📲 ${number}</a>`;
-  }
+  const isFiltering = !!(filterFrom || filterTo);
+  const labelFrom = filterFrom || '—';
+  const labelTo   = filterTo   || '—';
+
+  // Stats globales (sin filtro)
+  const globalRev     = allOrdersCache.reduce((s,o) => s+o.total, 0);
+  const globalPending = allOrdersCache.filter(o=>o.status==='pending').length;
+  const globalPrep    = allOrdersCache.filter(o=>o.status==='preparing').length;
 
   const activosHTML = activos.length === 0
-    ? '<div class="no-orders">🌭 No hay pedidos activos ahora mismo.</div>'
+    ? '<div class="no-orders">🌭 No hay pedidos activos en este período.</div>'
     : activos.map(o => `
-      <div class="order-card ${cardClass[o.status]}" id="oc-${o.key}">
+      <div class="order-card ${cardClass[o.status]}">
         <div class="order-top">
-          <div><div class="order-num">Pedido · ${new Date(o.timestamp||Date.now()).toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})}</div>
-          <div class="order-time">🕐 ${o.time}</div></div>
+          <div>
+            <div class="order-num">Pedido · ${new Date(o.timestamp||Date.now()).toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})}</div>
+            <div class="order-time">🕐 ${o.time}</div>
+          </div>
           <span class="order-status-badge ${statusClass[o.status]}">${statusLabel[o.status]}</span>
         </div>
-        <div class="order-client">👤 ${o.client} · 📞 ${o.phone}</div>
-        ${o.whatsapp ? `<div class="order-wa">💬 WhatsApp: ${waLink(o.whatsapp)}</div>` : ''}
+        <div class="order-client">👤 ${o.client}</div>
+        <div class="order-wa-row">💬 WhatsApp: ${waLink(o.whatsapp)}</div>
         <div class="order-address">📍 ${o.address}</div>
-        ${o.notes ? `<div class="order-address">💬 ${o.notes}</div>` : ''}
+        ${o.notes ? `<div class="order-address">🗒️ ${o.notes}</div>` : ''}
         <div class="order-items-list">
-          ${o.items.map(i => `• ${i.qty}x ${i.name} — $${(i.price*i.qty).toLocaleString('es-CO')}`).join('<br>')}
+          ${o.items.map(i=>`• ${i.qty}x ${i.name} — $${(i.price*i.qty).toLocaleString('es-CO')}`).join('<br>')}
           <br><strong style="color:var(--naranja)">+ Domicilio: $4.000 – $5.000</strong>
         </div>
         <div class="order-total-row">
@@ -546,31 +650,91 @@ function buildAdminHTML(activos, historial, total, pending, preparing, revenue) 
       </div>`).join('');
 
   const historialHTML = historial.length === 0
-    ? '<div class="no-orders" style="padding:30px 0">📭 Aún no hay ventas completadas.</div>'
+    ? '<div class="no-orders" style="padding:30px 0">📭 Sin ventas completadas en este período.</div>'
     : historial.map(o => `
       <div class="history-row">
         <div>
-          <div class="history-name">👤 ${o.client} · 📞 ${o.phone}${o.whatsapp ? ` · 💬 ${o.whatsapp}` : ''}</div>
+          <div class="history-name">👤 ${o.client} · ${waLink(o.whatsapp)}</div>
           <div class="history-info">📍 ${o.address} · 🕐 ${o.time}</div>
           <div class="history-info">${o.items.map(i=>`${i.qty}x ${i.name}`).join(', ')}</div>
         </div>
         <div class="history-total">$${o.total.toLocaleString('es-CO')}</div>
       </div>`).join('');
 
+  const eventosHTML = allEventosCache.length === 0
+    ? '<div class="no-orders" style="padding:30px 0">📭 Aún no hay solicitudes de eventos.</div>'
+    : allEventosCache.map(e => `
+      <div class="evento-row">
+        <div>
+          <div class="evento-wa">💬 ${waLink(e.whatsapp)}</div>
+          <div class="evento-time">🕐 ${e.time}</div>
+        </div>
+      </div>`).join('');
+
+  // Resumen filtrado
+  const filterSummaryHTML = isFiltering ? `
+    <div class="filter-summary show">
+      <div class="filter-summary-title">📊 Resumen · ${labelFrom} al ${labelTo}</div>
+      <div class="filter-summary-grid">
+        <div class="filter-stat"><div class="filter-stat-val">${filtered.length}</div><div class="filter-stat-lbl">Pedidos</div></div>
+        <div class="filter-stat"><div class="filter-stat-val">${historial.length}</div><div class="filter-stat-lbl">Entregados</div></div>
+        <div class="filter-stat"><div class="filter-stat-val">${pending}</div><div class="filter-stat-lbl">Pendientes</div></div>
+        <div class="filter-stat"><div class="filter-stat-val" style="font-size:1.1rem">$${revenue.toLocaleString('es-CO')}</div><div class="filter-stat-lbl">Ingresos</div></div>
+      </div>
+    </div>` : '';
+
   return `
+    <!-- ESTADÍSTICAS GLOBALES -->
     <div class="admin-stats">
-      <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total Pedidos</div></div>
-      <div class="stat-card"><div class="stat-value">${pending}</div><div class="stat-label">Pendientes</div></div>
-      <div class="stat-card"><div class="stat-value">${preparing}</div><div class="stat-label">Preparando</div></div>
-      <div class="stat-card"><div class="stat-value" style="font-size:1.2rem">$${revenue.toLocaleString('es-CO')}</div><div class="stat-label">Ventas Totales</div></div>
+      <div class="stat-card"><div class="stat-value">${allOrdersCache.length}</div><div class="stat-label">Total Pedidos</div></div>
+      <div class="stat-card"><div class="stat-value">${globalPending}</div><div class="stat-label">Pendientes</div></div>
+      <div class="stat-card"><div class="stat-value">${globalPrep}</div><div class="stat-label">Preparando</div></div>
+      <div class="stat-card"><div class="stat-value" style="font-size:1.1rem">$${globalRev.toLocaleString('es-CO')}</div><div class="stat-label">Ventas Totales</div></div>
     </div>
+
+    <!-- FILTRO DE FECHA -->
+    <div class="date-filter">
+      <div class="date-filter-title">🗓️ Filtrar por Fecha</div>
+      <div class="date-filter-row">
+        <div class="date-filter-group">
+          <label class="date-filter-label">Desde</label>
+          <input type="date" class="date-filter-input" id="dfFrom" value="${filterFrom}" onchange="onFilterChange()"/>
+        </div>
+        <div class="date-filter-group">
+          <label class="date-filter-label">Hasta</label>
+          <input type="date" class="date-filter-input" id="dfTo" value="${filterTo}" onchange="onFilterChange()"/>
+        </div>
+        <button class="date-filter-btn btn-filter-apply" onclick="applyFilter()">🔍 Filtrar</button>
+        <button class="date-filter-btn btn-filter-clear"  onclick="clearFilter()">✕ Limpiar</button>
+      </div>
+      ${isFiltering ? `<div class="date-filter-result">Mostrando ${filtered.length} pedido(s) entre ${labelFrom} y ${labelTo}</div>` : ''}
+    </div>
+
+    ${filterSummaryHTML}
+
+    <!-- TABS -->
     <div class="admin-tabs">
-      <button class="tab-btn ${currentTab==='activos'?'active':''}" onclick="switchTab('activos')">🔥 Pedidos Activos (${activos.length})</button>
-      <button class="tab-btn ${currentTab==='historial'?'active':''}" onclick="switchTab('historial')">📊 Historial de Ventas (${historial.length})</button>
+      <button class="tab-btn ${currentTab==='activos'   ?'active':''}" onclick="switchTab('activos')">🔥 Activos (${activos.length})</button>
+      <button class="tab-btn ${currentTab==='historial' ?'active':''}" onclick="switchTab('historial')">📊 Historial (${historial.length})</button>
+      <button class="tab-btn ${currentTab==='eventos'   ?'active':''}" onclick="switchTab('eventos')">🎉 Eventos (${allEventosCache.length})</button>
     </div>
-    <div id="tabActivos" class="orders-list" style="${currentTab==='activos'?'':'display:none'}">${activosHTML}</div>
-    <div id="tabHistorial" style="${currentTab==='historial'?'':'display:none'}">${historialHTML}</div>`;
+    <div id="tabActivos"   class="orders-list" style="${currentTab==='activos'   ?'':'display:none'}">${activosHTML}</div>
+    <div id="tabHistorial"                     style="${currentTab==='historial' ?'':'display:none'}">${historialHTML}</div>
+    <div id="tabEventos"                       style="${currentTab==='eventos'   ?'':'display:none'}">${eventosHTML}</div>`;
 }
+
+window.onFilterChange = function() {};  // placeholder; apply on button click
+
+window.applyFilter = function() {
+  filterFrom = document.getElementById('dfFrom').value;
+  filterTo   = document.getElementById('dfTo').value;
+  renderAdmin();
+};
+
+window.clearFilter = function() {
+  filterFrom = ''; filterTo = '';
+  renderAdmin();
+};
 
 window.switchTab = function(tab) {
   currentTab = tab;
@@ -578,35 +742,34 @@ window.switchTab = function(tab) {
   event.target.classList.add('active');
   document.getElementById('tabActivos').style.display   = tab==='activos'   ? '' : 'none';
   document.getElementById('tabHistorial').style.display = tab==='historial' ? '' : 'none';
+  document.getElementById('tabEventos').style.display   = tab==='eventos'   ? '' : 'none';
 };
 
 window.setStatus = async function(key, status) {
-  await update(ref(db, 'orders/' + key), { status });
+  await update(ref(db, 'orders/'+key), { status });
 };
 
 function showNotif() {
   const n = document.getElementById('newOrderNotif');
   n.style.display = 'block';
-  setTimeout(() => n.style.display = 'none', 4000);
+  setTimeout(() => n.style.display='none', 4000);
 }
 
-// ── ACCESO SECRETO: TRIPLE CLIC EN EL LOGO ──
+// ── ACCESO SECRETO: TRIPLE CLIC EN LOGO ──
 (function() {
-  let clickCount = 0;
-  let clickTimer = null;
+  let clicks = 0, timer = null;
   document.getElementById('logoArea').addEventListener('click', function() {
-    clickCount++;
-    clearTimeout(clickTimer);
-    clickTimer = setTimeout(() => { clickCount = 0; }, 600);
-    if (clickCount >= 3) {
-      clickCount = 0;
-      clearTimeout(clickTimer);
-      openAdmin();
-    }
+    clicks++;
+    clearTimeout(timer);
+    timer = setTimeout(() => { clicks = 0; }, 600);
+    if (clicks >= 3) { clicks = 0; clearTimeout(timer); openAdmin(); }
   });
 })();
 
+// ── INIT ──
 renderMenu();
+// Actualizar estado horario cada minuto
+setInterval(updateHorarioUI, 60000);
 </script>
 </body>
 </html>
