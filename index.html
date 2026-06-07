@@ -16,7 +16,7 @@
       --sombra: 0 8px 32px rgba(232,25,44,0.18);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Nunito', sans-serif; background: var(--oscuro); color: var(--crema); min-height: 100vh; }
+    body { font-family: 'Nunito', sans-serif; background: var(--oscuro); color: var(--crema); min-height: 100vh; padding-bottom: 100px; }
 
     /* HEADER */
     header { background: var(--rojo); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); border-bottom: 4px solid var(--amarillo); }
@@ -26,11 +26,8 @@
     .logo-text { font-family: 'Bangers', cursive; font-size: 2.4rem; letter-spacing: 3px; color: var(--amarillo); text-shadow: 3px 3px 0 var(--oscuro); line-height: 1; }
     .logo-sub { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; color: var(--crema); text-transform: uppercase; opacity: 0.9; }
     .header-nav { display: flex; gap: 12px; align-items: center; }
-    .btn-admin { background: var(--oscuro); color: var(--amarillo); border: 2px solid var(--amarillo); padding: 8px 18px; border-radius: 30px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.85rem; cursor: pointer; letter-spacing: 1px; transition: all 0.2s; }
-    .btn-admin:hover { background: var(--amarillo); color: var(--oscuro); }
-    .cart-btn { background: var(--amarillo); color: var(--oscuro); border: none; padding: 10px 20px; border-radius: 30px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
-    .cart-btn:hover { transform: scale(1.05); }
-    .cart-count { background: var(--rojo); color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; }
+    /* logo-area clickeable para acceso secreto */
+    .logo-area { cursor: pointer; user-select: none; }
 
     /* HERO */
     .hero { background: linear-gradient(135deg, var(--cafe) 0%, var(--oscuro) 50%, #2d0a00 100%); padding: 60px 2rem; text-align: center; position: relative; overflow: hidden; }
@@ -58,6 +55,66 @@
     .add-btn:hover { background: var(--naranja); transform: scale(1.08); }
     .popular-badge { position: absolute; top: 14px; right: 14px; background: var(--amarillo); color: var(--oscuro); font-size: 0.7rem; font-weight: 900; padding: 4px 10px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; }
 
+    /* ── CARRITO FLOTANTE SIEMPRE VISIBLE ── */
+    .floating-cart {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 150;
+      background: linear-gradient(90deg, var(--rojo), var(--naranja));
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 60px;
+      font-family: 'Bangers', cursive;
+      font-size: 1.35rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 30px rgba(232,25,44,0.55), 0 2px 8px rgba(0,0,0,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+      min-width: 220px;
+      justify-content: center;
+    }
+    .floating-cart:hover { transform: translateX(-50%) scale(1.06); box-shadow: 0 12px 40px rgba(232,25,44,0.7); }
+    .floating-cart:active { transform: translateX(-50%) scale(0.97); }
+    .floating-cart .fc-icon { font-size: 1.5rem; }
+    .floating-cart .fc-badge {
+      background: var(--amarillo);
+      color: var(--oscuro);
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .floating-cart.bump .fc-badge { animation: badgeBump 0.3s ease; }
+    @keyframes badgeBump { 0%{transform:scale(1)} 50%{transform:scale(1.5)} 100%{transform:scale(1)} }
+    .floating-cart .fc-total {
+      font-size: 1rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      opacity: 0.92;
+      letter-spacing: 0;
+    }
+    /* Cuando carrito vacío: más sutil pero siempre visible */
+    .floating-cart.empty {
+      background: #3d1800;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      opacity: 0.85;
+    }
+    .floating-cart.empty:hover { opacity: 1; }
+
     /* MODAL CARRITO */
     .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
     .overlay.active { display: flex; }
@@ -79,6 +136,11 @@
     .form-input { width: 100%; padding: 12px 14px; background: #2d1000; border: 2px solid #3d1800; border-radius: 12px; color: var(--crema); font-family: 'Nunito', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
     .form-input:focus { border-color: var(--amarillo); }
     .form-input::placeholder { color: #7a4a2a; }
+    /* WhatsApp field highlight */
+    .form-input.whatsapp-input { border-color: #25D366; }
+    .form-input.whatsapp-input:focus { border-color: #1ebe5d; box-shadow: 0 0 0 3px rgba(37,211,102,0.15); }
+    .whatsapp-label { color: #25D366 !important; }
+    .whatsapp-badge { background: #25D366; color: white; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; margin-left: 6px; vertical-align: middle; font-weight: 900; letter-spacing: 0.5px; }
     .order-btn { width: 100%; background: linear-gradient(90deg, var(--rojo), var(--naranja)); color: white; border: none; padding: 16px; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.5rem; letter-spacing: 2px; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
     .order-btn:hover { transform: scale(1.03); }
     .order-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
@@ -94,14 +156,10 @@
     .stat-card { background: #2d1000; border: 2px solid #3d1800; border-radius: 16px; padding: 20px; text-align: center; }
     .stat-value { font-family: 'Bangers', cursive; font-size: 2.2rem; color: var(--amarillo); }
     .stat-label { font-size: 0.78rem; color: #c8a07a; font-weight: 700; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
-
-    /* TABS ADMIN */
     .admin-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
     .tab-btn { padding: 10px 22px; border-radius: 30px; border: 2px solid #3d1800; background: transparent; color: #c8a07a; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
     .tab-btn.active { background: var(--rojo); border-color: var(--rojo); color: white; }
     .tab-btn:hover:not(.active) { border-color: var(--amarillo); color: var(--amarillo); }
-
-    /* PEDIDOS */
     .orders-list { display: flex; flex-direction: column; gap: 16px; }
     .order-card { background: #2d1000; border: 2px solid #3d1800; border-radius: 16px; padding: 20px; }
     .order-card.pending { border-left: 5px solid var(--amarillo); }
@@ -116,6 +174,10 @@
     .status-delivered { background: rgba(40,167,69,0.15); color: #28a745; border: 1px solid #28a745; }
     .order-client { font-weight: 700; color: var(--crema); margin-bottom: 4px; }
     .order-address { font-size: 0.85rem; color: #c8a07a; margin-bottom: 10px; }
+    /* WhatsApp link en pedidos admin */
+    .order-wa { font-size: 0.85rem; color: #25D366; margin-bottom: 4px; font-weight: 700; }
+    .order-wa a { color: #25D366; text-decoration: none; }
+    .order-wa a:hover { text-decoration: underline; }
     .order-items-list { background: #1a0800; border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 0.88rem; color: #e8c99a; line-height: 1.8; }
     .order-total-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .order-total-val { font-family: 'Bangers', cursive; font-size: 1.4rem; color: var(--amarillo); }
@@ -124,66 +186,45 @@
     .btn-prepare { background: var(--naranja); color: white; }
     .btn-deliver { background: #28a745; color: white; }
     .no-orders { text-align: center; padding: 60px 0; color: #7a4a2a; font-size: 1.1rem; }
-
-    /* HISTORIAL */
     .history-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #2d1000; border-radius: 10px; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; border-left: 3px solid #28a745; }
     .history-info { font-size: 0.85rem; color: #c8a07a; }
     .history-name { font-weight: 700; color: var(--crema); font-size: 0.95rem; }
     .history-total { font-family: 'Bangers', cursive; color: #28a745; font-size: 1.2rem; }
-
-    /* LOADING */
     .loading { text-align: center; padding: 40px; color: #c8a07a; font-size: 1rem; }
     .spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid #3d1800; border-top-color: var(--amarillo); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* NOTIF NUEVO PEDIDO */
-    .new-order-notif { position: fixed; bottom: 24px; right: 24px; background: var(--rojo); color: white; padding: 16px 24px; border-radius: 16px; font-weight: 900; font-size: 1rem; z-index: 400; box-shadow: 0 8px 30px rgba(0,0,0,0.5); animation: slideIn 0.4s ease; display: none; }
+    .new-order-notif { position: fixed; bottom: 90px; right: 24px; background: var(--rojo); color: white; padding: 16px 24px; border-radius: 16px; font-weight: 900; font-size: 1rem; z-index: 400; box-shadow: 0 8px 30px rgba(0,0,0,0.5); animation: slideIn 0.4s ease; display: none; }
     @keyframes slideIn { from{transform:translateY(80px);opacity:0} to{transform:translateY(0);opacity:1} }
-
-    /* SUCCESS */
     .success-screen { text-align: center; padding: 30px 0; }
     .success-emoji { font-size: 5rem; margin-bottom: 16px; display: block; animation: pop 0.4s ease; }
     @keyframes pop { 0%{transform:scale(0)} 70%{transform:scale(1.2)} 100%{transform:scale(1)} }
     .success-title { font-family: 'Bangers', cursive; font-size: 2.2rem; color: var(--amarillo); letter-spacing: 2px; margin-bottom: 10px; }
     .success-msg { color: #c8a07a; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
 
-    /* SETUP FIREBASE */
-    .setup-box { background: #2d1000; border: 2px solid var(--amarillo); border-radius: 20px; padding: 28px; margin: 20px 0; }
-    .setup-box h3 { font-family: 'Bangers', cursive; color: var(--amarillo); font-size: 1.6rem; margin-bottom: 14px; letter-spacing: 1px; }
-    .setup-box p { color: #c8a07a; font-size: 0.9rem; line-height: 1.7; margin-bottom: 10px; }
-    .setup-box code { background: #1a0800; padding: 2px 8px; border-radius: 6px; color: var(--crema); font-size: 0.85rem; }
-    .setup-btn { background: var(--amarillo); color: var(--oscuro); border: none; padding: 12px 24px; border-radius: 30px; font-family: 'Nunito', sans-serif; font-weight: 900; cursor: pointer; font-size: 0.95rem; margin-top: 10px; }
-
     footer { background: var(--cafe); text-align: center; padding: 24px; border-top: 3px solid var(--rojo); color: #c8a07a; font-size: 0.85rem; font-weight: 700; }
     footer span { color: var(--amarillo); }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #1a0800; }
     ::-webkit-scrollbar-thumb { background: var(--rojo); border-radius: 3px; }
+
     @media (max-width: 600px) {
       header { padding: 0 14px; }
       .logo-text { font-size: 1.8rem; }
       .logo-icon { font-size: 2rem; }
-      .cart-btn span:last-child { display: none; }
       .menu-section { padding: 30px 14px; }
+      .floating-cart { bottom: 16px; padding: 14px 22px; font-size: 1.1rem; min-width: 180px; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-area">
+  <div class="logo-area" id="logoArea">
     <span class="logo-icon">🌭</span>
     <div>
       <div class="logo-text">DOMI DOG</div>
       <div class="logo-sub">Perros & Hamburguesas</div>
     </div>
-  </div>
-  <div class="header-nav">
-    <button class="btn-admin" onclick="openAdmin()">🔑 Dueño</button>
-    <button class="cart-btn" onclick="openCart()">
-      🛒 <span>Mi Pedido</span>
-      <span class="cart-count" id="cartCount">0</span>
-    </button>
   </div>
 </header>
 
@@ -201,6 +242,13 @@
 <footer>
   <p>© 2025 <span>DOMI DOG</span> · Pedidos a domicilio · Hecho con ❤️ y mucha mostaza</p>
 </footer>
+
+<!-- CARRITO FLOTANTE SIEMPRE VISIBLE -->
+<button class="floating-cart empty" id="floatingCart" onclick="openCart()">
+  <span class="fc-icon">🛒</span>
+  <span id="fcLabel">Mi Pedido</span>
+  <span class="fc-badge" id="fcCount">0</span>
+</button>
 
 <!-- MODAL CARRITO -->
 <div class="overlay" id="cartOverlay">
@@ -240,14 +288,10 @@ const FIREBASE_CONFIG = {
   measurementId: "G-XRD4R4RCJV"
 };
 
-const CONFIGURED = true;
-
 let db, ordersRef;
-if (CONFIGURED) {
-  const app = initializeApp(FIREBASE_CONFIG);
-  db = getDatabase(app);
-  ordersRef = ref(db, 'orders');
-}
+const app = initializeApp(FIREBASE_CONFIG);
+db = getDatabase(app);
+ordersRef = ref(db, 'orders');
 
 // ── MENÚ ──
 const menu = [
@@ -285,17 +329,36 @@ window.addToCart = function(id, btn) {
   const item = menu.find(m => m.id === id);
   const ex = cart.find(c => c.id === id);
   ex ? ex.qty++ : cart.push({...item, qty:1});
-  updateCartCount();
+  updateCartUI();
   btn.style.transform = 'scale(0.88)';
   setTimeout(() => btn.style.transform = '', 150);
+  // Efecto bump en el badge flotante
+  const fc = document.getElementById('floatingCart');
+  fc.classList.remove('bump');
+  void fc.offsetWidth;
+  fc.classList.add('bump');
+  setTimeout(() => fc.classList.remove('bump'), 400);
 };
 
-function updateCartCount() {
-  document.getElementById('cartCount').textContent = cart.reduce((s,c) => s+c.qty, 0);
-}
+function totalItems() { return cart.reduce((s,c) => s+c.qty, 0); }
+function subtotal() { return cart.reduce((s,c) => s + c.price * c.qty, 0); }
 
-function subtotal() {
-  return cart.reduce((s,c) => s + c.price * c.qty, 0);
+function updateCartUI() {
+  const count = totalItems();
+  const sub = subtotal();
+  const fc = document.getElementById('floatingCart');
+  const fcCount = document.getElementById('fcCount');
+  const fcLabel = document.getElementById('fcLabel');
+
+  fcCount.textContent = count;
+
+  if (count === 0) {
+    fc.classList.add('empty');
+    fcLabel.textContent = 'Mi Pedido';
+  } else {
+    fc.classList.remove('empty');
+    fcLabel.textContent = `$${sub.toLocaleString('es-CO')}`;
+  }
 }
 
 window.openCart = function() { renderCart(); document.getElementById('cartOverlay').classList.add('active'); };
@@ -330,14 +393,30 @@ function renderCart(success=false) {
     <div class="delivery-notice">🛵 El domicilio tiene un costo adicional de <strong>$4.000 a $5.000</strong> según tu zona.</div>
     <div class="cart-total">Subtotal: $${subtotal().toLocaleString('es-CO')} COP</div>
     <div>
-      <div class="form-group"><label class="form-label">👤 Tu nombre *</label>
-        <input class="form-input" id="clientName" placeholder="Ej: María García"/></div>
-      <div class="form-group"><label class="form-label">📞 Teléfono *</label>
-        <input class="form-input" id="clientPhone" placeholder="Ej: 310 000 0000" type="tel"/></div>
-      <div class="form-group"><label class="form-label">📍 Dirección de entrega *</label>
-        <input class="form-input" id="clientAddress" placeholder="Ej: Cra 5 #12-34, Barrio Centro"/></div>
-      <div class="form-group"><label class="form-label">💬 Notas (opcional)</label>
-        <input class="form-input" id="clientNotes" placeholder="Ej: sin cebolla, extra salsa..."/></div>
+      <div class="form-group">
+        <label class="form-label">👤 Tu nombre *</label>
+        <input class="form-input" id="clientName" placeholder="Ej: María García"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📞 Teléfono *</label>
+        <input class="form-input" id="clientPhone" placeholder="Ej: 310 000 0000" type="tel"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label whatsapp-label">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style="width:16px;height:16px;vertical-align:middle;margin-right:4px;"/>
+          WhatsApp * <span class="whatsapp-badge">Obligatorio</span>
+        </label>
+        <input class="form-input whatsapp-input" id="clientWhatsapp" placeholder="Ej: 310 000 0000 (con código de país si aplica)" type="tel"/>
+        <div style="font-size:0.75rem;color:#25D366;margin-top:4px;font-weight:700;">📲 Te avisaremos por WhatsApp cuando tu pedido esté listo</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📍 Dirección de entrega *</label>
+        <input class="form-input" id="clientAddress" placeholder="Ej: Cra 5 #12-34, Barrio Centro"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">💬 Notas (opcional)</label>
+        <input class="form-input" id="clientNotes" placeholder="Ej: sin cebolla, extra salsa..."/>
+      </div>
       <button class="order-btn" id="submitBtn" onclick="submitOrder()">🌭 ENVIAR PEDIDO</button>
     </div>`;
 }
@@ -347,16 +426,25 @@ window.changeQty = function(id, delta) {
   if (!item) return;
   item.qty += delta;
   if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
-  updateCartCount();
+  updateCartUI();
   renderCart();
 };
 
 window.submitOrder = async function() {
-  const name    = document.getElementById('clientName').value.trim();
-  const phone   = document.getElementById('clientPhone').value.trim();
-  const address = document.getElementById('clientAddress').value.trim();
-  const notes   = document.getElementById('clientNotes').value.trim();
-  if (!name || !phone || !address) { alert('⚠️ Completa nombre, teléfono y dirección.'); return; }
+  const name     = document.getElementById('clientName').value.trim();
+  const phone    = document.getElementById('clientPhone').value.trim();
+  const whatsapp = document.getElementById('clientWhatsapp').value.trim();
+  const address  = document.getElementById('clientAddress').value.trim();
+  const notes    = document.getElementById('clientNotes').value.trim();
+
+  if (!name || !phone || !whatsapp || !address) {
+    if (!whatsapp) {
+      document.getElementById('clientWhatsapp').style.borderColor = '#e8192c';
+      document.getElementById('clientWhatsapp').focus();
+    }
+    alert('⚠️ Completa todos los campos obligatorios:\nNombre, Teléfono, WhatsApp y Dirección.');
+    return;
+  }
 
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
@@ -365,7 +453,11 @@ window.submitOrder = async function() {
   const order = {
     time: new Date().toLocaleString('es-CO'),
     timestamp: Date.now(),
-    client: name, phone, address, notes,
+    client: name,
+    phone,
+    whatsapp,
+    address,
+    notes,
     items: cart.map(c => ({ name:c.name, qty:c.qty, price:c.price })),
     total: subtotal(),
     status: 'pending'
@@ -374,7 +466,7 @@ window.submitOrder = async function() {
   await push(ordersRef, order);
 
   cart = [];
-  updateCartCount();
+  updateCartUI();
   renderCart(true);
 };
 
@@ -408,20 +500,24 @@ function loadAdmin() {
 }
 
 function renderAdmin(all) {
-  const activos    = all.filter(o => o.status !== 'delivered');
-  const historial  = all.filter(o => o.status === 'delivered');
-  const revenue    = all.reduce((s,o) => s+o.total, 0);
-  const pending    = all.filter(o => o.status === 'pending').length;
-  const preparing  = all.filter(o => o.status === 'preparing').length;
+  const activos   = all.filter(o => o.status !== 'delivered');
+  const historial = all.filter(o => o.status === 'delivered');
+  const revenue   = all.reduce((s,o) => s+o.total, 0);
+  const pending   = all.filter(o => o.status === 'pending').length;
+  const preparing = all.filter(o => o.status === 'preparing').length;
 
-  const el = document.getElementById('adminContent');
-  el.innerHTML = buildAdminHTML(activos, historial, all.length, pending, preparing, revenue);
+  document.getElementById('adminContent').innerHTML = buildAdminHTML(activos, historial, all.length, pending, preparing, revenue);
 }
 
 function buildAdminHTML(activos, historial, total, pending, preparing, revenue) {
   const statusLabel = { pending:'⏳ Pendiente', preparing:'🔥 Preparando', delivered:'✅ Entregado' };
   const statusClass = { pending:'status-pending', preparing:'status-preparing', delivered:'status-delivered' };
   const cardClass   = { pending:'pending', preparing:'preparing', delivered:'delivered' };
+
+  function waLink(number) {
+    const clean = number.replace(/\D/g,'');
+    return `<a href="https://wa.me/${clean}" target="_blank">📲 ${number}</a>`;
+  }
 
   const activosHTML = activos.length === 0
     ? '<div class="no-orders">🌭 No hay pedidos activos ahora mismo.</div>'
@@ -433,6 +529,7 @@ function buildAdminHTML(activos, historial, total, pending, preparing, revenue) 
           <span class="order-status-badge ${statusClass[o.status]}">${statusLabel[o.status]}</span>
         </div>
         <div class="order-client">👤 ${o.client} · 📞 ${o.phone}</div>
+        ${o.whatsapp ? `<div class="order-wa">💬 WhatsApp: ${waLink(o.whatsapp)}</div>` : ''}
         <div class="order-address">📍 ${o.address}</div>
         ${o.notes ? `<div class="order-address">💬 ${o.notes}</div>` : ''}
         <div class="order-items-list">
@@ -453,7 +550,7 @@ function buildAdminHTML(activos, historial, total, pending, preparing, revenue) 
     : historial.map(o => `
       <div class="history-row">
         <div>
-          <div class="history-name">👤 ${o.client} · 📞 ${o.phone}</div>
+          <div class="history-name">👤 ${o.client} · 📞 ${o.phone}${o.whatsapp ? ` · 💬 ${o.whatsapp}` : ''}</div>
           <div class="history-info">📍 ${o.address} · 🕐 ${o.time}</div>
           <div class="history-info">${o.items.map(i=>`${i.qty}x ${i.name}`).join(', ')}</div>
         </div>
@@ -475,7 +572,6 @@ function buildAdminHTML(activos, historial, total, pending, preparing, revenue) 
     <div id="tabHistorial" style="${currentTab==='historial'?'':'display:none'}">${historialHTML}</div>`;
 }
 
-
 window.switchTab = function(tab) {
   currentTab = tab;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -493,6 +589,22 @@ function showNotif() {
   n.style.display = 'block';
   setTimeout(() => n.style.display = 'none', 4000);
 }
+
+// ── ACCESO SECRETO: TRIPLE CLIC EN EL LOGO ──
+(function() {
+  let clickCount = 0;
+  let clickTimer = null;
+  document.getElementById('logoArea').addEventListener('click', function() {
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+    if (clickCount >= 3) {
+      clickCount = 0;
+      clearTimeout(clickTimer);
+      openAdmin();
+    }
+  });
+})();
 
 renderMenu();
 </script>
