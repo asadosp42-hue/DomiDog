@@ -204,7 +204,29 @@
     .evento-wa a:hover { text-decoration: underline; }
     .evento-time { font-size: 0.78rem; color: #a8f0c0; }
 
-    /* MISC */
+    /* MODAL DOMICILIO (admin) */
+    .dom-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:500; align-items:center; justify-content:center; padding:20px; }
+    .dom-overlay.active { display:flex; }
+    .dom-modal { background:#1a0800; border:3px solid var(--verde); border-radius:20px; width:100%; max-width:400px; padding:28px; position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.9); }
+    .dom-title { font-family:'Bangers',cursive; font-size:1.6rem; color:var(--verde); letter-spacing:2px; margin-bottom:6px; }
+    .dom-subtitle { font-size:0.82rem; color:#a8f0c0; margin-bottom:18px; line-height:1.5; }
+    .dom-client-info { background:#0d2a1a; border-radius:10px; padding:12px 14px; margin-bottom:16px; font-size:0.85rem; color:#c8f0d8; line-height:1.7; }
+    .dom-input-row { display:flex; gap:10px; align-items:flex-end; margin-bottom:14px; }
+    .dom-input-group { flex:1; }
+    .dom-label { display:block; font-size:0.78rem; font-weight:700; color:#a8f0c0; margin-bottom:5px; text-transform:uppercase; letter-spacing:1px; }
+    .dom-input { width:100%; padding:12px 14px; background:#0d2a1a; border:2px solid var(--verde); border-radius:10px; color:var(--crema); font-family:'Nunito',sans-serif; font-size:1rem; outline:none; font-weight:700; }
+    .dom-input:focus { box-shadow:0 0 0 3px rgba(37,211,102,0.2); }
+    .dom-total-row { background:#0a1f0d; border:2px solid var(--amarillo); border-radius:10px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+    .dom-total-label { font-size:0.82rem; color:#c8a07a; font-weight:700; }
+    .dom-total-val { font-family:'Bangers',cursive; font-size:1.6rem; color:var(--amarillo); }
+    .dom-actions { display:flex; gap:10px; }
+    .dom-btn-wa { flex:1; background:var(--verde); color:#0a1f0d; border:none; padding:14px; border-radius:50px; font-family:'Bangers',cursive; font-size:1.2rem; letter-spacing:1px; cursor:pointer; transition:all 0.2s; }
+    .dom-btn-wa:hover { background:#1ebe5d; transform:scale(1.03); }
+    .dom-btn-cancel { background:#3d1800; color:#c8a07a; border:none; padding:14px 18px; border-radius:50px; font-family:'Nunito',sans-serif; font-weight:900; font-size:0.88rem; cursor:pointer; }
+    .dom-btn-cancel:hover { background:#5d2800; }
+    /* Botón WA en tarjeta de pedido */
+    .btn-wa { background:var(--verde); color:#0a1f0d; }
+    .btn-wa:hover { background:#1ebe5d; }
     .loading { text-align: center; padding: 40px; color: #c8a07a; }
     .spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid #3d1800; border-top-color: var(--amarillo); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -241,7 +263,7 @@
 
 <!-- BANNER HORARIO -->
 <div class="horario-banner" id="horarioBanner">
-  <span>🕔 Horario: Jueves a Domingo · 5:00 PM – 10:00 PM</span>
+  <span>🕔 Horario: Jueves a Domingo + Festivos · 5:00 PM – 10:00 PM</span>
   <span id="estadoBadge" class="horario-closed">● Cerrado</span>
 </div>
 
@@ -274,7 +296,7 @@
     <div class="closed-icon">🌙</div>
     <div class="closed-title">Estamos Cerrados</div>
     <p class="closed-msg">En este momento no estamos tomando pedidos.<br>¡Vuelve en nuestro horario de atención!</p>
-    <p class="closed-schedule">📅 Jueves a Domingo · 5:00 PM – 10:00 PM</p>
+    <p class="closed-schedule">📅 Jueves a Domingo + Festivos · 5:00 PM – 10:00 PM</p>
   </div>
   <div class="menu-grid" id="menuGrid"></div>
 </section>
@@ -295,6 +317,30 @@
   <div class="modal">
     <button class="close-btn" onclick="closeCart()">✕</button>
     <div id="cartContent"></div>
+  </div>
+</div>
+
+<!-- MINI-MODAL DOMICILIO (admin) -->
+<div class="dom-overlay" id="domOverlay">
+  <div class="dom-modal">
+    <div class="dom-title">📲 Enviar por WhatsApp</div>
+    <div class="dom-subtitle" id="domSubtitle">Ingresa el valor del domicilio para calcular el total final antes de enviar el mensaje.</div>
+    <div class="dom-client-info" id="domClientInfo"></div>
+    <div class="dom-input-row">
+      <div class="dom-input-group">
+        <label class="dom-label">🛵 Valor Domicilio</label>
+        <input class="dom-input" id="domValue" type="number" placeholder="4000" min="0" step="500"
+               oninput="recalcDomTotal()"/>
+      </div>
+    </div>
+    <div class="dom-total-row">
+      <span class="dom-total-label">TOTAL A PAGAR (pedido + domicilio)</span>
+      <span class="dom-total-val" id="domTotalVal">$0</span>
+    </div>
+    <div class="dom-actions">
+      <button class="dom-btn-cancel" onclick="closeDomModal()">Cancelar</button>
+      <button class="dom-btn-wa" onclick="sendWaMessage()">📲 ABRIR WHATSAPP</button>
+    </div>
   </div>
 </div>
 
@@ -329,32 +375,56 @@ const ordersRef = ref(db, 'orders');
 const eventosRef= ref(db, 'eventos');
 
 // ── HORARIO ──
-// Jueves=4, Viernes=5, Sábado=6, Domingo=0  · 17:00–22:00 hora Colombia (UTC-5)
+// Abierto: Jueves–Domingo + festivos colombianos · 5 PM – 10 PM (hora Colombia)
+const FESTIVOS_CO = new Set([
+  // 2025
+  '2025-01-01','2025-01-06','2025-03-24','2025-04-17','2025-04-18',
+  '2025-05-01','2025-06-02','2025-06-23','2025-06-30','2025-07-20',
+  '2025-08-07','2025-08-18','2025-10-13','2025-11-03','2025-11-17',
+  '2025-12-08','2025-12-25',
+  // 2026
+  '2026-01-01','2026-01-12','2026-03-23','2026-04-02','2026-04-03',
+  '2026-05-01','2026-05-18','2026-06-08','2026-06-29','2026-07-20',
+  '2026-08-07','2026-08-17','2026-10-12','2026-11-02','2026-11-16',
+  '2026-12-08','2026-12-25'
+]);
+
 function isOpen() {
-  const now = new Date();
-  // Hora Colombia: UTC-5
-  const co = new Date(now.toLocaleString('en-US', { timeZone: 'America/Bogota' }));
-  const day  = co.getDay();    // 0=Dom,1=Lun,...,6=Sáb
+  const co   = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
+  const day  = co.getDay();   // 0=Dom … 6=Sáb
   const hour = co.getHours();
   const min  = co.getMinutes();
-  const openDays = [0, 4, 5, 6]; // Dom, Jue, Vie, Sáb
-  const afterOpen  = hour > 17 || (hour === 17 && min >= 0);
-  const beforeClose= hour < 22;
-  return openDays.includes(day) && afterOpen && beforeClose;
+  // Fecha en formato YYYY-MM-DD hora Colombia
+  const ds = co.getFullYear() + '-' +
+             String(co.getMonth()+1).padStart(2,'0') + '-' +
+             String(co.getDate()).padStart(2,'0');
+  const openDays   = [0, 4, 5, 6]; // Dom, Jue, Vie, Sáb
+  const esDiaAbierto = openDays.includes(day) || FESTIVOS_CO.has(ds);
+  const afterOpen    = hour > 17 || (hour === 17 && min >= 0);
+  const beforeClose  = hour < 22;
+  return esDiaAbierto && afterOpen && beforeClose;
+}
+
+function esFestivo() {
+  const co = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
+  const ds = co.getFullYear() + '-' +
+             String(co.getMonth()+1).padStart(2,'0') + '-' +
+             String(co.getDate()).padStart(2,'0');
+  return FESTIVOS_CO.has(ds);
 }
 
 function updateHorarioUI() {
-  const open = isOpen();
-  const badge = document.getElementById('estadoBadge');
-  const overlay = document.getElementById('closedOverlay');
-  const addBtns = document.querySelectorAll('.add-btn');
-  const fc = document.getElementById('floatingCart');
+  const open     = isOpen();
+  const festivo  = esFestivo();
+  const badge    = document.getElementById('estadoBadge');
+  const overlay  = document.getElementById('closedOverlay');
+  const addBtns  = document.querySelectorAll('.add-btn');
 
   if (open) {
-    badge.textContent = '● Abierto';
+    badge.textContent = festivo ? '● Abierto · Festivo 🎉' : '● Abierto';
     badge.className = 'horario-open';
     overlay.classList.remove('show');
-    addBtns.forEach(b => b.disabled = false);
+    addBtns.forEach(b => { b.disabled = false; b.textContent = '+ Agregar'; });
   } else {
     badge.textContent = '● Cerrado';
     badge.className = 'horario-closed';
@@ -645,6 +715,7 @@ function buildAdminHTML(activos, historial, allActivos, filtered, pending, prepa
           <div class="order-actions">
             ${o.status==='pending'   ? `<button class="action-btn btn-prepare" onclick="setStatus('${o.key}','preparing')">🔥 Preparando</button>` : ''}
             ${o.status==='preparing' ? `<button class="action-btn btn-deliver" onclick="setStatus('${o.key}','delivered')">✅ Entregado</button>` : ''}
+            <button class="action-btn btn-wa" onclick="openDomModal('${o.key}')">📲 WhatsApp</button>
           </div>
         </div>
       </div>`).join('');
@@ -747,6 +818,74 @@ window.switchTab = function(tab) {
 
 window.setStatus = async function(key, status) {
   await update(ref(db, 'orders/'+key), { status });
+};
+
+// ── MODAL DOMICILIO + WA ──
+let domCurrentOrder = null;
+
+window.openDomModal = function(key) {
+  domCurrentOrder = allOrdersCache.find(o => o.key === key);
+  if (!domCurrentOrder) return;
+  const o = domCurrentOrder;
+
+  // Construir info del cliente
+  document.getElementById('domClientInfo').innerHTML =
+    `<strong>👤 ${o.client}</strong><br>` +
+    `📲 ${o.whatsapp}<br>` +
+    `📍 ${o.address}<br>` +
+    (o.notes ? `🗒️ ${o.notes}<br>` : '') +
+    `<br><strong>🛒 Pedido:</strong><br>` +
+    o.items.map(i => `• ${i.qty}x ${i.name} — $${(i.price*i.qty).toLocaleString('es-CO')}`).join('<br>') +
+    `<br><strong style="color:var(--amarillo)">Subtotal: $${o.total.toLocaleString('es-CO')} COP</strong>`;
+
+  document.getElementById('domValue').value = '4000';
+  recalcDomTotal();
+  document.getElementById('domOverlay').classList.add('active');
+  setTimeout(() => document.getElementById('domValue').focus(), 100);
+};
+
+window.closeDomModal = function() {
+  document.getElementById('domOverlay').classList.remove('active');
+  domCurrentOrder = null;
+};
+
+window.recalcDomTotal = function() {
+  if (!domCurrentOrder) return;
+  const domVal = parseInt(document.getElementById('domValue').value) || 0;
+  const total  = domCurrentOrder.total + domVal;
+  document.getElementById('domTotalVal').textContent = `$${total.toLocaleString('es-CO')}`;
+};
+
+window.sendWaMessage = function() {
+  if (!domCurrentOrder) return;
+  const o      = domCurrentOrder;
+  const domVal = parseInt(document.getElementById('domValue').value) || 0;
+  const total  = o.total + domVal;
+  const waNum  = (o.whatsapp || '').replace(/\D/g,'');
+
+  // Construir mensaje bonito
+  const itemsText = o.items.map(i =>
+    `  • ${i.qty}x ${i.name}: $${(i.price*i.qty).toLocaleString('es-CO')}`
+  ).join('\n');
+
+  const msg =
+`🌭 *DOMI DOG* — Confirmación de pedido
+
+Hola ${o.client}! 👋 Tu pedido está en camino 🛵
+
+*🛒 Detalle:*
+${itemsText}
+
+*🛵 Domicilio:* $${domVal.toLocaleString('es-CO')}
+*💰 TOTAL A PAGAR:* $${total.toLocaleString('es-CO')} COP
+
+📍 Entrega en: ${o.address}
+${o.notes ? `🗒️ Nota: ${o.notes}\n` : ''}
+¡Gracias por tu pedido! 🔥`;
+
+  const encoded = encodeURIComponent(msg);
+  window.open(`https://wa.me/${waNum}?text=${encoded}`, '_blank');
+  closeDomModal();
 };
 
 function showNotif() {
