@@ -67,7 +67,9 @@
     .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
     .card { background: linear-gradient(145deg, #2d1000, #1a0800); border: 2px solid #3d1800; border-radius: 20px; overflow: hidden; transition: transform 0.25s, border-color 0.25s; position: relative; }
     .card:hover { transform: translateY(-6px); border-color: var(--amarillo); }
-    .card-emoji { font-size: 5rem; text-align: center; padding: 28px 0 10px; display: block; }
+    .card-img-wrap { padding: 22px 18px 8px; background: linear-gradient(180deg,#3d1a00 0%,#2d1000 100%); display: flex; align-items: center; justify-content: center; }
+    .card-img-wrap svg { width: 100%; max-width: 200px; height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.5)); transition: transform 0.3s; }
+    .card:hover .card-img-wrap svg { transform: scale(1.06) translateY(-4px); }
     .card-body { padding: 0 20px 20px; }
     .card-name { font-family: 'Bangers', cursive; font-size: 1.5rem; color: var(--crema); letter-spacing: 1px; margin-bottom: 6px; }
     .card-desc { font-size: 0.85rem; color: #c8a07a; margin-bottom: 14px; line-height: 1.5; }
@@ -433,13 +435,135 @@ function updateHorarioUI() {
   }
 }
 
+// ── ILUSTRACIONES SVG INLINE ──
+const SVG_PERRO_SENCILLO = `<svg viewBox="0 0 230 110" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="115" cy="98" rx="90" ry="18" fill="#C8860A"/>
+  <ellipse cx="115" cy="90" rx="90" ry="16" fill="#D4920F"/>
+  <rect x="27" y="55" width="176" height="34" rx="17" fill="#8B1A1A"/>
+  <rect x="30" y="57" width="170" height="14" rx="7" fill="#A52020"/>
+  <ellipse cx="27" cy="72" rx="10" ry="17" fill="#7A1515"/>
+  <ellipse cx="203" cy="72" rx="10" ry="17" fill="#7A1515"/>
+  <polyline points="35,55 50,44 65,55 80,44 95,55 110,44 125,55 140,44 155,55 170,44 185,55 200,44 215,55" fill="none" stroke="#FFD700" stroke-width="3.5" stroke-linecap="round"/>
+  <polyline points="38,52 53,42 68,52 83,42 98,52 113,42 128,52 143,42 158,52 173,42 188,52 203,42 218,52" fill="none" stroke="#CC2200" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5,4"/>
+  <ellipse cx="115" cy="55" rx="90" ry="22" fill="#D4920F"/>
+  <ellipse cx="115" cy="45" rx="85" ry="18" fill="#E8A820"/>
+  <ellipse cx="115" cy="36" rx="78" ry="13" fill="#F0B828"/>
+  <ellipse cx="90" cy="30" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(-20 90 30)"/>
+  <ellipse cx="115" cy="27" rx="5" ry="3" fill="#FFF8EE" opacity="0.75"/>
+  <ellipse cx="140" cy="30" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(20 140 30)"/>
+</svg>`;
+
+const SVG_PERRO_TOCINETA = `<svg viewBox="0 0 230 110" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="115" cy="98" rx="90" ry="18" fill="#C8860A"/>
+  <ellipse cx="115" cy="90" rx="90" ry="16" fill="#D4920F"/>
+  <path d="M27,76 Q45,66 63,76 Q81,86 99,76 Q117,66 135,76 Q153,86 171,76 Q189,66 207,76 L207,86 Q189,96 171,86 Q153,76 135,86 Q117,96 99,86 Q81,76 63,86 Q45,96 27,86 Z" fill="#8B2020"/>
+  <path d="M30,76 Q48,68 66,76 Q84,84 102,76 Q120,68 138,76 Q156,84 174,76 Q192,68 210,76" fill="none" stroke="#CC3333" stroke-width="1.5"/>
+  <rect x="27" y="55" width="176" height="30" rx="15" fill="#8B1A1A"/>
+  <rect x="30" y="57" width="170" height="12" rx="6" fill="#A52020"/>
+  <ellipse cx="27" cy="70" rx="10" ry="15" fill="#7A1515"/>
+  <ellipse cx="203" cy="70" rx="10" ry="15" fill="#7A1515"/>
+  <polyline points="35,55 50,44 65,55 80,44 95,55 110,44 125,55 140,44 155,55 170,44 185,55 200,44 215,55" fill="none" stroke="#FFD700" stroke-width="3.5" stroke-linecap="round"/>
+  <ellipse cx="115" cy="55" rx="90" ry="22" fill="#D4920F"/>
+  <ellipse cx="115" cy="45" rx="85" ry="18" fill="#E8A820"/>
+  <ellipse cx="115" cy="36" rx="78" ry="13" fill="#F0B828"/>
+  <ellipse cx="90" cy="30" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(-20 90 30)"/>
+  <ellipse cx="115" cy="27" rx="5" ry="3" fill="#FFF8EE" opacity="0.75"/>
+  <ellipse cx="140" cy="30" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(20 140 30)"/>
+</svg>`;
+
+const SVG_PERRO_APANADO = `<svg viewBox="0 0 230 110" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="115" cy="98" rx="90" ry="18" fill="#C8860A"/>
+  <ellipse cx="115" cy="90" rx="90" ry="16" fill="#D4920F"/>
+  <rect x="27" y="54" width="176" height="36" rx="18" fill="#C8780A"/>
+  <rect x="30" y="57" width="170" height="14" rx="7" fill="#D4880F"/>
+  <ellipse cx="27" cy="72" rx="10" ry="18" fill="#B86A08"/>
+  <ellipse cx="203" cy="72" rx="10" ry="18" fill="#B86A08"/>
+  <ellipse cx="55" cy="64" rx="4" ry="2.5" fill="#9A5806" opacity="0.9"/>
+  <ellipse cx="74" cy="60" rx="3" ry="4" fill="#9A5806" opacity="0.9"/>
+  <ellipse cx="94" cy="65" rx="4" ry="2.5" fill="#9A5806" opacity="0.9"/>
+  <ellipse cx="114" cy="60" rx="3" ry="4" fill="#9A5806" opacity="0.9"/>
+  <ellipse cx="134" cy="65" rx="4" ry="2.5" fill="#9A5806" opacity="0.9"/>
+  <ellipse cx="154" cy="60" rx="3" ry="4" fill="#9A5806" opacity="0.9"/>
+  <ellipse cx="174" cy="65" rx="4" ry="2.5" fill="#9A5806" opacity="0.9"/>
+  <ellipse cx="194" cy="60" rx="3" ry="4" fill="#9A5806" opacity="0.9"/>
+  <path d="M34,54 Q74,42 115,46 Q156,42 196,54" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+  <path d="M36,50 Q76,39 115,43 Q154,39 194,50" fill="none" stroke="#CC2200" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="115" cy="54" rx="90" ry="22" fill="#D4920F"/>
+  <ellipse cx="115" cy="44" rx="85" ry="18" fill="#E8A820"/>
+  <ellipse cx="115" cy="35" rx="78" ry="13" fill="#F0B828"/>
+  <ellipse cx="90" cy="29" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(-20 90 29)"/>
+  <ellipse cx="115" cy="26" rx="5" ry="3" fill="#FFF8EE" opacity="0.75"/>
+  <ellipse cx="140" cy="29" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(20 140 29)"/>
+</svg>`;
+
+const SVG_HAMB_SENCILLA = `<svg viewBox="0 0 230 130" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="115" cy="118" rx="92" ry="16" fill="#C8860A"/>
+  <ellipse cx="115" cy="110" rx="92" ry="14" fill="#D4920F"/>
+  <path d="M25,100 Q70,90 115,94 Q160,90 205,100 Q160,108 115,104 Q70,108 25,100 Z" fill="#4A8A20"/>
+  <path d="M28,98 Q72,88 115,92 Q158,88 202,98" fill="none" stroke="#3A7010" stroke-width="1.5"/>
+  <rect x="27" y="87" width="176" height="14" rx="4" fill="#CC2200"/>
+  <line x1="52" y1="87" x2="52" y2="101" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="77" y1="87" x2="77" y2="101" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="102" y1="87" x2="102" y2="101" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="127" y1="87" x2="127" y2="101" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="152" y1="87" x2="152" y2="101" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="177" y1="87" x2="177" y2="101" stroke="#AA1800" stroke-width="1.2"/>
+  <rect x="22" y="74" width="186" height="15" rx="3" fill="#F0A800"/>
+  <polygon points="22,89 36,89 29,97" fill="#F0A800"/>
+  <polygon points="208,89 194,89 201,97" fill="#F0A800"/>
+  <ellipse cx="115" cy="72" rx="90" ry="16" fill="#6B2A00"/>
+  <ellipse cx="115" cy="67" rx="88" ry="13" fill="#7A3200"/>
+  <ellipse cx="115" cy="63" rx="84" ry="10" fill="#8A3A00"/>
+  <path d="M30,62 Q73,53 115,56 Q157,53 200,62" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+  <path d="M32,58 Q75,50 115,52 Q155,50 198,58" fill="none" stroke="#CC2200" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="115" cy="54" rx="92" ry="24" fill="#D4920F"/>
+  <ellipse cx="115" cy="40" rx="87" ry="19" fill="#E8A820"/>
+  <ellipse cx="115" cy="29" rx="80" ry="13" fill="#F0B828"/>
+  <ellipse cx="90" cy="23" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(-20 90 23)"/>
+  <ellipse cx="115" cy="20" rx="5" ry="3" fill="#FFF8EE" opacity="0.75"/>
+  <ellipse cx="140" cy="23" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(20 140 23)"/>
+</svg>`;
+
+const SVG_HAMB_DOBLE = `<svg viewBox="0 0 230 145" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="115" cy="133" rx="92" ry="16" fill="#C8860A"/>
+  <ellipse cx="115" cy="125" rx="92" ry="14" fill="#D4920F"/>
+  <path d="M25,115 Q70,105 115,109 Q160,105 205,115 Q160,123 115,119 Q70,123 25,115 Z" fill="#4A8A20"/>
+  <rect x="27" y="102" width="176" height="14" rx="4" fill="#CC2200"/>
+  <line x1="52" y1="102" x2="52" y2="116" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="77" y1="102" x2="77" y2="116" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="102" y1="102" x2="102" y2="116" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="127" y1="102" x2="127" y2="116" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="152" y1="102" x2="152" y2="116" stroke="#AA1800" stroke-width="1.2"/>
+  <line x1="177" y1="102" x2="177" y2="116" stroke="#AA1800" stroke-width="1.2"/>
+  <rect x="22" y="90" width="186" height="13" rx="3" fill="#F0A800"/>
+  <polygon points="22,103 35,103 28,111" fill="#F0A800"/>
+  <polygon points="208,103 195,103 201,111" fill="#F0A800"/>
+  <ellipse cx="115" cy="88" rx="90" ry="14" fill="#6B2A00"/>
+  <ellipse cx="115" cy="83" rx="88" ry="12" fill="#7A3200"/>
+  <path d="M27,78 Q45,69 63,78 Q81,87 99,78 Q117,69 135,78 Q153,87 171,78 Q189,69 207,78 L207,86 Q189,95 171,86 Q153,77 135,86 Q117,95 99,86 Q81,77 63,86 Q45,95 27,86 Z" fill="#8B2020"/>
+  <rect x="22" y="64" width="186" height="13" rx="3" fill="#F0A800"/>
+  <polygon points="22,77 35,77 28,85" fill="#F0A800"/>
+  <polygon points="208,77 195,77 201,85" fill="#F0A800"/>
+  <ellipse cx="115" cy="62" rx="90" ry="14" fill="#6B2A00"/>
+  <ellipse cx="115" cy="57" rx="88" ry="12" fill="#7A3200"/>
+  <ellipse cx="115" cy="53" rx="84" ry="9" fill="#8A3A00"/>
+  <path d="M30,52 Q73,43 115,46 Q157,43 200,52" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+  <path d="M32,48 Q75,40 115,43 Q155,40 198,48" fill="none" stroke="#CC2200" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="115" cy="46" rx="92" ry="24" fill="#D4920F"/>
+  <ellipse cx="115" cy="32" rx="87" ry="18" fill="#E8A820"/>
+  <ellipse cx="115" cy="21" rx="80" ry="12" fill="#F0B828"/>
+  <ellipse cx="90" cy="16" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(-20 90 16)"/>
+  <ellipse cx="115" cy="13" rx="5" ry="3" fill="#FFF8EE" opacity="0.75"/>
+  <ellipse cx="140" cy="16" rx="5" ry="3" fill="#FFF8EE" opacity="0.75" transform="rotate(20 140 16)"/>
+</svg>`;
+
 // ── MENÚ ──
 const menu = [
-  { id:1, name:"Perro Sencillo",      desc:"Salchicha jumbo, pan suave, salsas a tu gusto",                price:4000,  emoji:"🌭", popular:false },
-  { id:2, name:"Perro + Tocineta",    desc:"Salchicha jumbo con tocineta crujiente, pan tostado y salsas", price:6000,  emoji:"🌭", popular:true  },
-  { id:3, name:"Perro Apanado",       desc:"Salchicha apanada crocante, pan suave, salsas especiales",     price:4500,  emoji:"🌭", popular:false },
-  { id:4, name:"Hamburguesa Sencilla",desc:"Carne jugosa, lechuga, tomate, queso y salsas de la casa",    price:6000,  emoji:"🍔", popular:false },
-  { id:5, name:"Hamburguesa Doble",   desc:"Doble carne, doble queso, tocineta, lechuga, tomate y salsas",price:12000, emoji:"🍔", popular:true  }
+  { id:1, name:"Perro Sencillo",      desc:"Salchicha jumbo, pan suave, salsas a tu gusto",                price:4000,  svg: SVG_PERRO_SENCILLO, emoji:"🌭", popular:false },
+  { id:2, name:"Perro + Tocineta",    desc:"Salchicha jumbo con tocineta crujiente, pan tostado y salsas", price:6000,  svg: SVG_PERRO_TOCINETA, emoji:"🌭", popular:true  },
+  { id:3, name:"Perro Apanado",       desc:"Salchicha apanada crocante, pan suave, salsas especiales",     price:4500,  svg: SVG_PERRO_APANADO,  emoji:"🌭", popular:false },
+  { id:4, name:"Hamburguesa Sencilla",desc:"Carne jugosa, lechuga, tomate, queso y salsas de la casa",    price:6000,  svg: SVG_HAMB_SENCILLA,  emoji:"🍔", popular:false },
+  { id:5, name:"Hamburguesa Doble",   desc:"Doble carne, doble queso, tocineta, lechuga, tomate y salsas",price:12000, svg: SVG_HAMB_DOBLE,     emoji:"🍔", popular:true  }
 ];
 
 let cart = [];
@@ -454,7 +578,7 @@ function renderMenu() {
   document.getElementById('menuGrid').innerHTML = menu.map(item => `
     <div class="card">
       ${item.popular ? '<span class="popular-badge">⭐ Popular</span>' : ''}
-      <span class="card-emoji">${item.emoji}</span>
+      <div class="card-img-wrap">${item.svg}</div>
       <div class="card-body">
         <div class="card-name">${item.name}</div>
         <div class="card-desc">${item.desc}</div>
